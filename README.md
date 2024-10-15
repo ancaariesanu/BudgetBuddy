@@ -1,7 +1,7 @@
 # Budget Buddy
 ## Mobile Systems and Applications - Team Project
 ### Team Members: Anca Ariesanu & Robert Negre
-Our Budget Buddy - an expense tracker app has a streamlined front page where users can view their current balance, total income and total expenses, along with recent transactions. 
+Our Budget Buddy app has a streamlined front page where users can view their current balance, total income and total expenses, along with recent transactions. 
 
 Key features include the ability to add, edit and delete transactions, categorize expenses by type, adding notes, dates, and even uploading a picture of a receipt.
 

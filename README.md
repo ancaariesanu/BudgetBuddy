@@ -52,3 +52,15 @@ The Settings Page empowers users to customize their experience:
  
 - **Income Settings**: A field for users to set and update their income information.
 - **Change Name Option**: Allows users to update their name in the app, maintaining a personalized experience.
+
+### High-level Architecture
+
+![uml](https://github.com/user-attachments/assets/4129c222-7941-4e44-b1ba-897c2e914acf)
+
+
+### Wireframe
+<img width="991" alt="Screenshot 2024-10-19 at 13 41 14" src="https://github.com/user-attachments/assets/d30b7d45-d0c1-41b5-a62c-b70ae26d72da">
+<img width="994" alt="Screenshot 2024-10-19 at 13 41 25" src="https://github.com/user-attachments/assets/3414d612-bf72-4ed7-b0ea-6b887941bf3f">
+
+
+

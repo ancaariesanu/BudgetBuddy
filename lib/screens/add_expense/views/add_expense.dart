@@ -28,27 +28,31 @@ class AddExpense extends StatelessWidget {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(26.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
                 "Add Expense",
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500, color: Color.fromARGB(255, 72, 70, 70),),
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w700,
+                  color: Color.fromARGB(255, 123, 123, 123),
+                ),
               ),
               const SizedBox(
-                height: 55,
+                height: 45,
               ),
               Container(
                 decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                      blurRadius: 1,
-                      spreadRadius: 0.2,
-                      color: Color.fromARGB(255, 137, 131, 131),
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+                  // boxShadow: const [
+                  //   BoxShadow(
+                  //     blurRadius: 1,
+                  //     spreadRadius: 0.2,
+                  //     color: Color.fromARGB(255, 137, 131, 131),
+                  //     offset: Offset(1, 1),
+                  //   ),
+                  // ],
                   borderRadius: BorderRadius.circular(45),
                 ),
                 child: SizedBox(

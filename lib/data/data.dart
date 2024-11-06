@@ -52,3 +52,37 @@ List<Map<String, dynamic>> transactionsData = [
     'date': '06/10/2024',
   }
 ];
+
+List<Map<String, dynamic>> discountsData = [
+  {
+    'icon': const Icon(
+      SFSymbols.bag,
+      color: Colors.white,
+    ),
+    'color': const Color.fromARGB(255, 212, 174, 104),
+    'percent': '25% OFF',
+    'code': 'Code: HM25BUDDY'
+  },
+  {
+    'icon': const Icon(
+      SFSymbols.cart,
+      color: Colors.white,
+    ),
+    'color': const Color.fromARGB(255, 82, 152, 177),
+    'percent': '12% OFF',
+    'code': 'Code: CARR12BUDDY'
+  },
+  {
+    'icon': const Icon(
+      SFSymbols.car_fill,
+      color: Colors.white,
+    ),
+    'color': const Color.fromARGB(255, 166, 85, 85),
+    'percent': '33% OFF',
+    'code': 'Code: VERTICAL33BUDDY'
+  },
+];
+
+List<Map<String, dynamic>> progressBarData = [
+  {'currentReceipts': 13, 'totalReceiptsRequired': 40}
+];

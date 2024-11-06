@@ -14,6 +14,18 @@ class Settings extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.surface,
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.surface,
+          elevation: 0,
+          title: Text(
+            "Settings",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: true,
+          iconTheme: IconThemeData(
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -31,49 +43,62 @@ class Settings extends StatelessWidget {
               const SizedBox(
                 height: 55,
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: TextFormField(
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 38,
-                    foreground: Paint()
-                      ..shader = const LinearGradient(colors: [
-                        Color.fromARGB(255, 77, 182, 172),
-                        Color.fromARGB(255, 107, 159, 249),
-                        Color.fromARGB(255, 102, 187, 106),
-                        Color.fromARGB(255, 38, 166, 154),
-                        // Theme.of(context).colorScheme.primary,
-                        // Theme.of(context).colorScheme.secondary,
-                        // Theme.of(context).colorScheme.tertiary
-                      ], transform: GradientRotation(pi / 90))
-                          .createShader(
-                        const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
-                      ),
-                  ),
-                  textAlign: TextAlign.center,
-                  textAlignVertical: TextAlignVertical.center,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 12.0, top: 12, right: 12, bottom: 12),
-                      child: Text(
-                        'RON ',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Theme.of(context).colorScheme.outline,
-                          fontWeight: FontWeight.bold,
+              Container(
+                decoration: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 1,
+                      spreadRadius: 0.2,
+                      color: Color.fromARGB(255, 137, 131, 131),
+                      offset: Offset(1, 1),
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(45),
+                ),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: TextFormField(
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 38,
+                      foreground: Paint()
+                        ..shader = const LinearGradient(colors: [
+                          Color.fromARGB(255, 77, 182, 172),
+                          Color.fromARGB(255, 107, 159, 249),
+                          Color.fromARGB(255, 102, 187, 106),
+                          Color.fromARGB(255, 38, 166, 154),
+                          // Theme.of(context).colorScheme.primary,
+                          // Theme.of(context).colorScheme.secondary,
+                          // Theme.of(context).colorScheme.tertiary
+                        ], transform: GradientRotation(pi / 90))
+                            .createShader(
+                          const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                        ),
+                    ),
+                    textAlign: TextAlign.center,
+                    textAlignVertical: TextAlignVertical.center,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12.0, top: 12, right: 12, bottom: 12),
+                        child: Text(
+                          'RON ',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.outline,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 12.0),
-                    hintText: '0,00',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(45),
-                      borderSide: BorderSide.none,
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 12.0),
+                      hintText: '0,00',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(45),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
                 ),
@@ -136,33 +161,46 @@ class Settings extends StatelessWidget {
               const SizedBox(
                 height: 165,
               ),
-              SizedBox(
-                width: double.infinity,
-                height: kToolbarHeight,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Theme.of(context).colorScheme.primary,
-                        Theme.of(context).colorScheme.secondary,
-                        Theme.of(context).colorScheme.tertiary,
-                      ],
+              Container(
+                decoration: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 2.5,
+                      spreadRadius: 0.5,
+                      color: Color.fromARGB(255, 137, 131, 131),
+                      offset: Offset(2, 2),
                     ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  ],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: kToolbarHeight,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary,
+                          Theme.of(context).colorScheme.tertiary,
+                        ],
                       ),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Text(
-                      'Save',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
+                    child: TextButton(
+                      onPressed: () {},
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        'Save',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

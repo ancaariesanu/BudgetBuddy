@@ -24,5 +24,3 @@ flutter:
   - family: sficonsets
     fonts:
       - asset: packages/flutter_sfsymbols/fonts/sficonsets.ttf
-
-

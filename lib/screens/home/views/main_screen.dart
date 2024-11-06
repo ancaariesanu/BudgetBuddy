@@ -1,4 +1,6 @@
 import 'package:budget_buddy/data/data.dart';
+import 'package:budget_buddy/screens/discounts/views/discounts.dart';
+import 'package:budget_buddy/screens/settings/views/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 
@@ -62,11 +64,25 @@ class MainScreen extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) => const Discounts(),
+                            ),
+                          );
+                        },
                         icon: const Icon(SFSymbols.gift_fill, size: 30),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) => const Settings(),
+                            ),
+                          );
+                        },
                         icon: const Icon(SFSymbols.gear_alt_fill, size: 30),
                       ),
                     ],

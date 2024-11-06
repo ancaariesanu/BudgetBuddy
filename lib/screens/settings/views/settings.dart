@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 
-class AddExpense extends StatelessWidget {
-  const AddExpense({super.key});
+class Settings extends StatelessWidget {
+  const Settings({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,12 @@ class AddExpense extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
-                "Add Expense",
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500, color: Color.fromARGB(255, 72, 70, 70),),
+                "Add Income",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromARGB(255, 72, 70, 70),
+                ),
               ),
               const SizedBox(
                 height: 55,
@@ -86,31 +90,9 @@ class AddExpense extends StatelessWidget {
                       ),
                       filled: true,
                       fillColor: Colors.white,
-                      prefixIcon: const Icon(SFSymbols.list_dash,
-                          color: Color.fromARGB(255, 72, 72, 72)),
-                      hintText: 'Category',
-                      hintStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.outline),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none)),
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Center(
-                child: TextFormField(
-                  textAlignVertical: TextAlignVertical.center,
-                  decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
                       prefixIcon: const Icon(SFSymbols.pencil,
                           color: Color.fromARGB(255, 72, 72, 72)),
-                      hintText: 'Transaction Details',
+                      hintText: 'Income Details',
                       hintStyle: TextStyle(
                           color: Theme.of(context).colorScheme.outline),
                       border: OutlineInputBorder(
@@ -119,65 +101,40 @@ class AddExpense extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 25,
+                height: 75,
               ),
-              Center(
-                child: TextFormField(
-                  textAlignVertical: TextAlignVertical.center,
-                  readOnly: true,
-                  onTap: () {
-                    showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate:
-                            DateTime.now().add(const Duration(days: 365)));
-                  },
-                  decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      prefixIcon: const Icon(SFSymbols.calendar_badge_plus,
-                          color: Color.fromARGB(255, 72, 72, 72)),
-                      hintText: 'Date',
-                      hintStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.outline),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none)),
+              const Text(
+                "Change Name",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromARGB(255, 72, 70, 70),
                 ),
               ),
               const SizedBox(
                 height: 45,
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.5,
-                height: kToolbarHeight,
-                child: TextButton.icon(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  icon: const Icon(
-                    SFSymbols.camera,
-                    color: Color.fromARGB(255, 72, 72, 72),
-                  ),
-                  label: Text(
-                    'Upload Receipt',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Theme.of(context).colorScheme.outline,
-                    ),
-                  ),
+              Center(
+                child: TextFormField(
+                  textAlignVertical: TextAlignVertical.center,
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      prefixIcon: const Icon(SFSymbols.person,
+                          color: Color.fromARGB(255, 72, 72, 72)),
+                      hintText: 'New Name',
+                      hintStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.outline),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none)),
                 ),
               ),
               const SizedBox(
-                height: 115,
+                height: 165,
               ),
               SizedBox(
                 width: double.infinity,

@@ -17,7 +17,7 @@ class MyAppView extends StatelessWidget {
           secondary: Color.fromARGB(255, 79, 193, 165),
           tertiary: Color.fromARGB(255, 136, 204, 213),
           outline: Colors.grey
-        )
+        ),
       ),
       home: const HomeScreen(),
     );

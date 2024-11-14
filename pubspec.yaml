@@ -12,6 +12,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_sfsymbols: ^2.0.0
   fl_chart: ^0.69.0
+  intl: ^0.20.0
+  flutter_colorpicker: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -24,3 +26,5 @@ flutter:
   - family: sficonsets
     fonts:
       - asset: packages/flutter_sfsymbols/fonts/sficonsets.ttf
+  assets:
+    - assets/

@@ -107,9 +107,9 @@ class Discounts extends StatelessWidget {
                                 radius: 18,
                                 backgroundColor: Colors.orange,
                                 child: Icon(
-                                  SFSymbols.lock_open_fill,
+                                  SFSymbols.lock_fill,
                                   color: Colors.white,
-                                  size: 22,
+                                  size: 26,
                                 ),
                               ),
                             ),

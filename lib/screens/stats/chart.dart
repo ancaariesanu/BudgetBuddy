@@ -130,15 +130,15 @@ class _MyChartState extends State<MyChart> {
         color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14);
     String text;
     if (value == 0) {
-      text = 'RON 1K';
+      text = '1K';
     } else if (value == 2) {
-      text = 'RON 2K';
+      text = '2K';
     } else if (value == 3) {
-      text = 'RON 3K';
+      text = '3K';
     } else if (value == 4) {
-      text = 'RON 4K';
+      text = '4K';
     } else if (value == 5) {
-      text = 'RON 5K';
+      text = '5K';
     } else {
       return Container();
     }

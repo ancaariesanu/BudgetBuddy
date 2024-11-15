@@ -1,7 +1,11 @@
+import 'package:budget_buddy/screens/add_expense/blocs/create_category_bloc/create_category_bloc.dart';
+import 'package:budget_buddy/screens/add_expense/blocs/get_categories_bloc/get_categories_bloc.dart';
 import 'package:budget_buddy/screens/add_expense/views/add_expense.dart';
 import 'package:budget_buddy/screens/home/views/main_screen.dart';
 import 'package:budget_buddy/screens/stats/stats.dart';
+import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -49,9 +53,20 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-            context, 
+            context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => const AddExpense(),
+              builder: (BuildContext context) => MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) =>
+                        CreateCategoryBloc(FirebaseExpenseRepo()),
+                  ),
+                  BlocProvider(
+                    create: (context) => GetCategoriesBloc(FirebaseExpenseRepo())..add(GetCategories()),
+                  ),
+                ],
+                child: const AddExpense(),
+              ),
             ),
           );
         },

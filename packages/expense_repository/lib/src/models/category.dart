@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class Category {
   String categoryId;
   String name;
-  int totalExpenses;
+  double totalExpenses;
   String icon;
   int color;
 

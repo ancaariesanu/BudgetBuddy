@@ -94,7 +94,7 @@ class Settings extends StatelessWidget {
                       ),
                       contentPadding:
                           const EdgeInsets.symmetric(horizontal: 12.0),
-                      hintText: '0,00',
+                      hintText: '0.00',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(45),
                         borderSide: BorderSide.none,

@@ -1,7 +1,7 @@
 class CategoryEntity {
   String categoryId;
   String name;
-  int totalExpenses;
+  double totalExpenses;
   String icon;
   int color;
 

@@ -1,4 +1,5 @@
 import 'package:budget_buddy/screens/add_expense/blocs/create_category_bloc/create_category_bloc.dart';
+import 'package:budget_buddy/screens/add_expense/blocs/create_expense_bloc/create_expense_bloc.dart';
 import 'package:budget_buddy/screens/add_expense/blocs/get_categories_bloc/get_categories_bloc.dart';
 import 'package:budget_buddy/screens/add_expense/views/add_expense.dart';
 import 'package:budget_buddy/screens/home/views/main_screen.dart';
@@ -63,6 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   BlocProvider(
                     create: (context) => GetCategoriesBloc(FirebaseExpenseRepo())..add(GetCategories()),
+                  ),
+                  BlocProvider(
+                    create: (context) =>
+                        CreateExpenseBloc(FirebaseExpenseRepo()),
                   ),
                 ],
                 child: const AddExpense(),

@@ -108,9 +108,6 @@ class _StatScreenState extends State<StatScreen> {
                     ),
                     isExpanded
                       ? Container(
-                          // constraints: const BoxConstraints(
-                          //   maxWidth: 360,
-                          // ),
                           height: 150,
                           width: MediaQuery.of(context).size.width,
                           decoration: const BoxDecoration(
@@ -122,12 +119,10 @@ class _StatScreenState extends State<StatScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Scrollbar(
-                              //controller: _scrollController,
                               thumbVisibility: true,
                               child: Padding(
                                 padding: const EdgeInsets.only(right: 12),
                                 child: ListView.builder(
-                                  //controller: _scrollController,
                                   itemCount: _availableYears.length,
                                   itemBuilder: (context, index) {
                                     final year = _availableYears[index];

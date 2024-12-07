@@ -147,16 +147,11 @@ Future getCategoryCreation(BuildContext context) {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10),
-                                                    // image: DecorationImage(
-                                                    //     image: AssetImage(
-                                                    //         'assets/${myCategoriesIcons[i]}.png'))),
-                                                    
                                               ),
                                               child: Center(
                                                 child: Icon(
                                                   iconMap[myCategoriesIcons[i]] ?? SFSymbols.question,
                                                   size: 30,
-                                                  //color: Colors.black54,
                                                 ),
                                               ),
                                             ),
@@ -213,7 +208,6 @@ Future getCategoryCreation(BuildContext context) {
                                             ),
                                             child: TextButton(
                                               onPressed: () {
-                                                print(categoryColor);
                                                 Navigator.pop(ctx2);
                                               },
                                               style: TextButton.styleFrom(
@@ -277,7 +271,6 @@ Future getCategoryCreation(BuildContext context) {
                                   )
                                 : TextButton(
                                     onPressed: () {
-                                      // create category object and pop!!!
                                       setState(() {
                                         category.categoryId = const Uuid().v1();
                                         category.name =

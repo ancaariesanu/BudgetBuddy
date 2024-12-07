@@ -72,16 +72,12 @@ class ViewAllExpenses extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        //color: Theme.of(context).colorScheme.onSurface,
                         foreground: Paint()
                         ..shader = const LinearGradient(colors: [
                           Color.fromARGB(255, 77, 182, 172),
                           Color.fromARGB(255, 107, 159, 249),
                           Color.fromARGB(255, 102, 187, 106),
                           Color.fromARGB(255, 38, 166, 154),
-                          // Theme.of(context).colorScheme.primary,
-                          // Theme.of(context).colorScheme.secondary,
-                          // Theme.of(context).colorScheme.tertiary
                         ], transform: GradientRotation(pi / 90))
                             .createShader(
                           const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
@@ -97,6 +93,9 @@ class ViewAllExpenses extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(25),
+                          border: Border.all(
+                                color: const Color.fromARGB(100, 137, 131, 131),
+                                width: 0.5),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),

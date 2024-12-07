@@ -184,10 +184,6 @@ class MainScreen extends StatelessWidget {
                             Container(
                               width: 30,
                               height: 30,
-                              // decoration: const BoxDecoration(
-                              //   color: Colors.white10,
-                              //   shape: BoxShape.circle
-                              // ),
                               child: const Center(
                                   child: Icon(
                                 SFSymbols.arrow_down_circle,
@@ -224,10 +220,6 @@ class MainScreen extends StatelessWidget {
                             Container(
                               width: 30,
                               height: 30,
-                              // decoration: const BoxDecoration(
-                              //   color: Colors.white10,
-                              //   shape: BoxShape.circle
-                              // ),
                               child: const Center(
                                   child: Icon(
                                 SFSymbols.arrow_up_circle,
@@ -249,7 +241,6 @@ class MainScreen extends StatelessWidget {
                                       fontWeight: FontWeight.w700),
                                 ),
                                 Text(
-                                  //"564,0",
                                   totalExpenses.toStringAsFixed(2),
                                   style: const TextStyle(
                                       fontSize: 15,
@@ -281,7 +272,6 @@ class MainScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    //aiciiiiiiiiiiii!!!!!!!!!!!!!!!!
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
@@ -318,7 +308,11 @@ class MainScreen extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(25)),
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(
+                                color: const Color.fromARGB(100, 137, 131, 131),
+                                width: 0.5),
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Row(
@@ -342,19 +336,12 @@ class MainScreen extends StatelessWidget {
                                             SFSymbols.question,
                                         color: Colors.white,
                                       ),
-                                      // Image.asset(
-                                      //   'assets/${myCategoriesIcons[i]}.png',
-                                      //   //scale: 2,
-                                      //   color: Colors.white,
-                                      // )
-                                      //transactionsData[i]['icon']
                                     ],
                                   ),
                                   const SizedBox(
                                     width: 12,
                                   ),
                                   Text(
-                                    //transactionsData[i]['name'],
                                     categoryName,
                                     style: TextStyle(
                                         fontSize: 15,
@@ -369,11 +356,7 @@ class MainScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    //transactionsData[i]['totalAmount'],
-                                    //expenses[i].amount.toString(),
-                                    //"- ${expenses[i].category.totalExpenses.toString()} RON",
                                     "- ${totalAmount.toStringAsFixed(2)} RON",
-                                    //"- ${expenses[i].amount.toString()} RON",
                                     style: TextStyle(
                                         fontSize: 15,
                                         color: Theme.of(context)
@@ -383,7 +366,6 @@ class MainScreen extends StatelessWidget {
                                   ),
                                   Text(
                                     isToday ? "Today" :
-                                    //transactionsData[i]['date'],
                                     DateFormat('dd/MM/yyyy').format(lastUpdatedDate),
                                     style: TextStyle(
                                         fontSize: 15,
@@ -392,15 +374,6 @@ class MainScreen extends StatelessWidget {
                                             .outline,
                                         fontWeight: FontWeight.w500),
                                   ),
-                                  // Text(
-                                  //   "(Last Updated)",
-                                  //   style: TextStyle(
-                                  //       fontSize: 7,
-                                  //       color: Theme.of(context)
-                                  //           .colorScheme
-                                  //           .outline,
-                                  //       fontWeight: FontWeight.w500),
-                                  // ),
                                 ],
                               ),
                             ],

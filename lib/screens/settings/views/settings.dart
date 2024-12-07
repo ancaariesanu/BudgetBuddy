@@ -45,14 +45,6 @@ class Settings extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  // boxShadow: const [
-                  //   BoxShadow(
-                  //     blurRadius: 1,
-                  //     spreadRadius: 0.2,
-                  //     color: Color.fromARGB(255, 137, 131, 131),
-                  //     offset: Offset(1, 1),
-                  //   ),
-                  // ],
                   borderRadius: BorderRadius.circular(45),
                 ),
                 child: SizedBox(
@@ -67,9 +59,6 @@ class Settings extends StatelessWidget {
                           Color.fromARGB(255, 107, 159, 249),
                           Color.fromARGB(255, 102, 187, 106),
                           Color.fromARGB(255, 38, 166, 154),
-                          // Theme.of(context).colorScheme.primary,
-                          // Theme.of(context).colorScheme.secondary,
-                          // Theme.of(context).colorScheme.tertiary
                         ], transform: GradientRotation(pi / 90))
                             .createShader(
                           const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),

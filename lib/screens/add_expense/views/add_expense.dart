@@ -100,14 +100,6 @@ class _AddExpenseState extends State<AddExpense> {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          // boxShadow: const [
-                          //   BoxShadow(
-                          //     blurRadius: 1,
-                          //     spreadRadius: 0.2,
-                          //     color: Color.fromARGB(255, 137, 131, 131),
-                          //     offset: Offset(1, 1),
-                          //   ),
-                          // ],
                           borderRadius: BorderRadius.circular(45),
                         ),
                         child: SizedBox(
@@ -123,9 +115,6 @@ class _AddExpenseState extends State<AddExpense> {
                                   Color.fromARGB(255, 107, 159, 249),
                                   Color.fromARGB(255, 102, 187, 106),
                                   Color.fromARGB(255, 38, 166, 154),
-                                  // Theme.of(context).colorScheme.primary,
-                                  // Theme.of(context).colorScheme.secondary,
-                                  // Theme.of(context).colorScheme.tertiary
                                 ], transform: GradientRotation(pi / 90))
                                     .createShader(
                                   const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
@@ -185,13 +174,6 @@ class _AddExpenseState extends State<AddExpense> {
                                       color: Color.fromARGB(255, 72, 72, 72)),
                                   suffixIcon: IconButton(
                                       onPressed: () async {
-                                        // var newCategory =
-                                        //     await getCategoryCreation(context);
-                                        // //print(newCategory);
-                                        // setState(() {
-                                        //   state.categories
-                                        //       .insert(0, newCategory);
-                                        // });
                                         final getCategoriesBloc = context.read<GetCategoriesBloc>();
 
                                         await getCategoryCreation(context);
@@ -261,18 +243,6 @@ class _AddExpenseState extends State<AddExpense> {
                                                         : Colors
                                                             .grey.shade100)),
                                             child: ListTile(
-                                              // onTap: () {
-                                              //   setState(() {
-                                              //     expense.category = state.categories[i];
-                                              //     categoryController.text = expense.category.name;
-                                              //   });
-                                              // },
-                                              // leading: Icon(
-                                              //     iconMap[myCategoriesIcons[
-                                              //             i]] ??
-                                              //         SFSymbols.question,
-                                              //     color: Colors.white,
-                                              //     size: 28),
                                               leading: Icon(iconMap[state.categories[i].icon] ?? SFSymbols.question,
                                                   color: Colors.white,
                                                   size: 28),
@@ -336,8 +306,6 @@ class _AddExpenseState extends State<AddExpense> {
                               context: context,
                               initialDate: expense.date,
                               firstDate: DateTime(2000),
-                              // lastDate: DateTime(
-                              //     2100), //DateTime.now().add(const Duration(days: 365)));
                               lastDate: DateTime.now(),
                               helpText: 'Select A Date',
                               cancelText: 'Cancel',
@@ -436,7 +404,6 @@ class _AddExpenseState extends State<AddExpense> {
                                             detailsController.text;
                                         expense.receiptPhoto =
                                             receiptPhotoController.text;
-                                        //expense
                                       });
                                       context
                                           .read<CreateExpenseBloc>()

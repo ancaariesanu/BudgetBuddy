@@ -8,3 +8,13 @@ sealed class GetExpensesEvent extends Equatable {
 }
 
 class GetExpenses extends GetExpensesEvent {}
+
+class FetchMonthlyExpenses extends GetExpensesEvent {
+  final int year;
+  final int month;
+
+  const FetchMonthlyExpenses(this.year, this.month);
+
+  @override
+  List<Object> get props => [year, month];
+}

@@ -35,6 +35,12 @@ class MainScreen extends StatelessWidget {
       }
     }
 
+    // Calculate total expenses
+    final totalExpenses = expenses.fold<double>(
+      0.0,
+      (sum, expense) => sum + expense.amount,
+    );
+
     // Convert map to a sorted list based on latestDate
     final sortedCategories = groupedCategories.entries.toList()
       ..sort((a, b) => b.value['latestDate'].compareTo(a.value['latestDate']));
@@ -232,10 +238,10 @@ class MainScreen extends StatelessWidget {
                             const SizedBox(
                               width: 8,
                             ),
-                            const Column(
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   "Expenses",
                                   style: TextStyle(
                                       fontSize: 15,
@@ -243,8 +249,9 @@ class MainScreen extends StatelessWidget {
                                       fontWeight: FontWeight.w700),
                                 ),
                                 Text(
-                                  "564,0",
-                                  style: TextStyle(
+                                  //"564,0",
+                                  totalExpenses.toStringAsFixed(2),
+                                  style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w500),

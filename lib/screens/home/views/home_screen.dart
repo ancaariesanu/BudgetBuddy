@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             body: index == 0 
               ? MainScreen(state.expenses) 
-              : const StatScreen(),
+              : StatScreen(expenses: state.expenses,),
           );
         } else {
           return const Scaffold(

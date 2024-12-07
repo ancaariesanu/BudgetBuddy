@@ -85,8 +85,11 @@ Future getCategoryCreation(BuildContext context) {
                               ),
                               isDense: true,
                               filled: true,
-                              suffixIcon: const Icon(SFSymbols.chevron_down,
-                                  color: Color.fromARGB(255, 156, 156, 156)),
+                              suffixIcon: Icon(
+                                isExpanded
+                              ? SFSymbols.chevron_up
+                              : SFSymbols.chevron_down,
+                                  color: const Color.fromARGB(255, 156, 156, 156)),
                               fillColor: Colors.white,
                               hintText: 'Icon',
                               hintStyle: TextStyle(

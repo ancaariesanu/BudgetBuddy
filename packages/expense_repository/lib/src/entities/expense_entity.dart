@@ -26,6 +26,8 @@ class ExpenseEntity {
       'category': category.toEntity().toDocument(), 
       'details': details, 
       'date': date, 
+      'year': date.year, 
+      'month': date.month, 
       'amount': amount,
       'receiptPhoto': receiptPhoto
     };

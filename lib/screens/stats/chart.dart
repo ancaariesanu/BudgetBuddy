@@ -1,151 +1,133 @@
 import 'dart:math';
-
+import 'package:expense_repository/expense_repository.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class MyChart extends StatefulWidget {
-  const MyChart({super.key});
+class MyChart extends StatelessWidget {
+  final List<Expense> data;
+  final int year;
 
-  @override
-  State<MyChart> createState() => _MyChartState();
-}
+  const MyChart({required this.data, required this.year, super.key});
 
-class _MyChartState extends State<MyChart> {
   @override
   Widget build(BuildContext context) {
+    // Filter expenses for the given year
+    final filteredData = data.where((expense) => expense.date.year == year).toList();
+
+    // Aggregate expenses by month
+    final Map<int, double> monthData = {};
+    for (final expense in filteredData) {
+      final month = expense.date.month; // Extract month (1 = Jan, 12 = Dec)
+      monthData[month] = (monthData[month] ?? 0) + expense.amount;
+    }
+
+    // Determine the month with the maximum total expense
+    final maxExpense = monthData.values.isEmpty
+        ? 0
+        : monthData.values.reduce((a, b) => a > b ? a : b);
+
+    // Generate the bar groups dynamically
+    final barGroups = _generateBarGroups(context, monthData, maxExpense.toDouble());
+
     return BarChart(
-      mainBarData(),
-    );
-  }
-
-  BarChartGroupData makeGroupData(int x, double y) {
-    return BarChartGroupData(x: x, barRods: [
-      BarChartRodData(
-          toY: y,
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.secondary,
-              Theme.of(context).colorScheme.tertiary,
-            ],
-            transform: const GradientRotation(pi / 25),
+      BarChartData(
+        barGroups: barGroups,
+        titlesData: FlTitlesData(
+          show: true,
+          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 38,
+              getTitlesWidget: (value, meta) => _getBottomTitles(value, meta),
+            ),
           ),
-          width: 20,
-          backDrawRodData: BackgroundBarChartRodData(
-              show: true, toY: 5, color: Colors.grey.shade300))
-    ]);
-  }
-
-  List<BarChartGroupData> showingGroups() => List.generate(8, (i) {
-        switch (i) {
-          case 0:
-            return makeGroupData(0, 2);
-          case 1:
-            return makeGroupData(1, 3);
-          case 2:
-            return makeGroupData(2, 2);
-          case 3:
-            return makeGroupData(3, 4.5);
-          case 4:
-            return makeGroupData(4, 3.8);
-          case 5:
-            return makeGroupData(5, 1.5);
-          case 6:
-            return makeGroupData(6, 4);
-          case 7:
-            return makeGroupData(7, 3.8);
-          default:
-            return throw Error();
-        }
-      });
-
-  BarChartData mainBarData() {
-    return BarChartData(
-      titlesData: FlTitlesData(
-        show: true,
-        rightTitles:
-            const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        bottomTitles: AxisTitles(
+          leftTitles: AxisTitles(
             sideTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 38,
-          getTitlesWidget: getTiles,
-        )),
-        leftTitles: AxisTitles(
-            sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 38,
-                getTitlesWidget: leftTiles)),
+              showTitles: true,
+              reservedSize: 38,
+              getTitlesWidget: (value, meta) => _getLeftTitles(value, meta),
+            ),
+          ),
+        ),
+        borderData: FlBorderData(show: false),
+        gridData: const FlGridData(show: false),
       ),
-      borderData: FlBorderData(show: false),
-      gridData: const FlGridData(show: false),
-      barGroups: showingGroups(),
     );
   }
 
-  Widget getTiles(double value, TitleMeta meta) {
-    const style = TextStyle(
-        color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14);
-    Widget text;
+  List<BarChartGroupData> _generateBarGroups(
+      BuildContext context, Map<int, double> monthData, double maxExpense) {
+    // Generate bar groups for all months (1 to 12), even if no data
+    return List.generate(12, (index) {
+      final month = index + 1; // Months are 1-based
+      final expense = monthData[month] ?? 0;
 
-    switch (value.toInt()) {
-      case 0:
-        text = const Text('01', style: style);
-        break;
-      case 1:
-        text = const Text('02', style: style);
-        break;
-      case 2:
-        text = const Text('03', style: style);
-        break;
-      case 3:
-        text = const Text('04', style: style);
-        break;
-      case 4:
-        text = const Text('05', style: style);
-        break;
-      case 5:
-        text = const Text('06', style: style);
-        break;
-      case 6:
-        text = const Text('07', style: style);
-        break;
-      case 7:
-        text = const Text('08', style: style);
-        break;
-      default:
-        text = const Text('', style: style);
-        break;
-    }
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 16,
-      child: text,
-    );
+      return BarChartGroupData(
+        x: index,
+        barRods: [
+          BarChartRodData(
+            toY: expense,
+            gradient: LinearGradient(
+              colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
+                Theme.of(context).colorScheme.tertiary,
+              ],
+              transform: const GradientRotation(pi / 25),
+            ),
+            width: 15,
+            backDrawRodData: BackgroundBarChartRodData(
+              show: true,
+              toY: maxExpense, // Grey bar height based on the max monthly total
+              color: Colors.grey.shade300,
+            ),
+          ),
+        ],
+      );
+    });
   }
 
-  Widget leftTiles(double value, TitleMeta meta) {
+  Widget _getBottomTitles(double value, TitleMeta meta) {
     const style = TextStyle(
-        color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14);
-    String text;
-    if (value == 0) {
-      text = '1K';
-    } else if (value == 2) {
-      text = '2K';
-    } else if (value == 3) {
-      text = '3K';
-    } else if (value == 4) {
-      text = '4K';
-    } else if (value == 5) {
-      text = '5K';
-    } else {
-      return Container();
-    }
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 0,
-      child: Text(text, style: style),
+      color: Colors.grey,
+      fontWeight: FontWeight.bold,
+      fontSize: 11,
     );
+
+    // Map index to month numbers
+    const monthNames = [
+      // '1', '2', '3', '4', '5', '6',
+      // '7', '8', '9', '10', '11', '12'
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+
+    if (value.toInt() >= 0 && value.toInt() < monthNames.length) {
+      return SideTitleWidget(
+        axisSide: meta.axisSide,
+        space: 16,
+        child: Text(monthNames[value.toInt()], style: style),
+      );
+    }
+    return Container();
+  }
+
+  Widget _getLeftTitles(double value, TitleMeta meta) {
+    const style = TextStyle(
+      color: Colors.grey,
+      fontWeight: FontWeight.bold,
+      fontSize: 11,
+    );
+
+    if (value % 10 == 0) {
+      return SideTitleWidget(
+        axisSide: meta.axisSide,
+        space: 0,
+        child: Text('${value.toInt()}', style: style),
+      );
+    }
+    return Container();
   }
 }

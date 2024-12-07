@@ -9,4 +9,6 @@ abstract class ExpenseRepository {
   Future<void> createExpense(Expense expense);
 
   Future<List<Expense>> getExpenses();
+
+  Future<List<Expense>> getExpensesByMonth(int year, int month);
 }

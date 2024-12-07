@@ -175,5 +175,27 @@ class FirebaseExpenseRepo implements ExpenseRepository{
       rethrow;
     }
   }
+
+  @override
+  Future<List<Expense>> getExpensesByMonth(int year, int month) async {
+    try {
+      // Query Firestore for expenses matching the given year and month
+      final snapshot = await expenseCollection
+          .where('year', isEqualTo: year)
+          .where('month', isEqualTo: month)
+          .get();
+
+      // Convert Firestore documents to Expense objects
+      return snapshot.docs
+          .map((doc) => Expense.fromEntity(
+                ExpenseEntity.fromDocument(doc.data()),
+              ))
+          .toList();
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
   
 }

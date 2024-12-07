@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
+import 'package:budget_buddy/screens/add_expense/views/category_constants.dart';
 
 class AddExpense extends StatefulWidget {
   const AddExpense({super.key});
@@ -39,78 +40,6 @@ class _AddExpenseState extends State<AddExpense> {
     super.dispose();
   }
 
-  List<String> myCategoriesIcons = [
-    'airplane',
-    'archivebox.fill',
-    'bag.fill',
-    'bed.double.fill',
-    'bolt.fill',
-    'book.fill',
-    'briefcase.fill',
-    'car.fill',
-    'cart',
-    'chart.pie',
-    'creditcard.fill',
-    'drop.fill',
-    'exclamationmark.triangle.fill',
-    'film',
-    'flame.fill',
-    'gamecontroller.fill',
-    'gift.fill',
-    'hand.tap',
-    'heart.fill',
-    'house.fill',
-    'lock.fill',
-    'macbook',
-    'music.note.list',
-    'paintbrush.pointed.fill',
-    'phone.fill',
-    'play.fill',
-    'scissors',
-    'shield.fill',
-    'sparkles',
-    'ticket.fill',
-    'tram.fill',
-    'tv.fill',
-    'wrench.and.screwdriver.fill'
-  ];
-
-  final Map<String, IconData> iconMap = {
-    'airplane': SFSymbols.airplane,
-    'archivebox.fill': SFSymbols.archivebox_fill,
-    'bag.fill': SFSymbols.bag_fill,
-    'bed.double.fill': SFSymbols.bed_double_fill,
-    'bolt.fill': SFSymbols.bolt_fill,
-    'book.fill': SFSymbols.book_fill,
-    'briefcase.fill': SFSymbols.briefcase_fill,
-    'car.fill': SFSymbols.car_fill,
-    'cart': SFSymbols.cart_fill,
-    'chart.pie': SFSymbols.chart_pie_fill,
-    'creditcard.fill': SFSymbols.creditcard_fill,
-    'drop.fill': SFSymbols.drop_fill,
-    'exclamationmark.triangle.fill': SFSymbols.exclamationmark_triangle_fill,
-    'film': SFSymbols.film_fill,
-    'flame.fill': SFSymbols.flame_fill,
-    'gamecontroller.fill': SFSymbols.gamecontroller_fill,
-    'gift.fill': SFSymbols.gift_fill,
-    'hand.tap': SFSymbols.hand_draw,
-    'heart.fill': SFSymbols.heart_fill,
-    'house.fill': SFSymbols.house_fill,
-    'lock.fill': SFSymbols.lock_fill,
-    'macbook': SFSymbols.macwindow,
-    'music.note.list': SFSymbols.music_note_list,
-    'paintbrush.pointed.fill': SFSymbols.paintbrush_fill,
-    'phone.fill': SFSymbols.phone_fill,
-    'play.fill': SFSymbols.play_fill,
-    'scissors': SFSymbols.scissors,
-    'shield.fill': SFSymbols.shield_fill,
-    'sparkles': SFSymbols.sparkles,
-    'ticket.fill': SFSymbols.ticket_fill,
-    'tram.fill': SFSymbols.tram_fill,
-    'tv.fill': SFSymbols.tv_fill,
-    'wrench.and.screwdriver.fill': SFSymbols.wrench_fill
-  };
-
   @override
   void initState() {
     dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
@@ -124,7 +53,7 @@ class _AddExpenseState extends State<AddExpense> {
     return BlocListener<CreateExpenseBloc, CreateExpenseState>(
       listener: (context, state) {
         if (state is CreateExpenseSuccess) {
-          Navigator.pop(context);
+          Navigator.pop(context, expense);
         } else if (state is CreateExpenseLoading) {
           setState(() {
             isLoading = true;
@@ -256,13 +185,19 @@ class _AddExpenseState extends State<AddExpense> {
                                       color: Color.fromARGB(255, 72, 72, 72)),
                                   suffixIcon: IconButton(
                                       onPressed: () async {
-                                        var newCategory =
-                                            await getCategoryCreation(context);
-                                        //print(newCategory);
-                                        setState(() {
-                                          state.categories
-                                              .insert(0, newCategory);
-                                        });
+                                        // var newCategory =
+                                        //     await getCategoryCreation(context);
+                                        // //print(newCategory);
+                                        // setState(() {
+                                        //   state.categories
+                                        //       .insert(0, newCategory);
+                                        // });
+                                        final getCategoriesBloc = context.read<GetCategoriesBloc>();
+
+                                        await getCategoryCreation(context);
+
+                                        // Use the stored reference
+                                        getCategoriesBloc.add(GetCategories());
                                       },
                                       icon: const Icon(SFSymbols.plus_app,
                                           color: Color.fromARGB(
@@ -332,10 +267,13 @@ class _AddExpenseState extends State<AddExpense> {
                                               //     categoryController.text = expense.category.name;
                                               //   });
                                               // },
-                                              leading: Icon(
-                                                  iconMap[myCategoriesIcons[
-                                                          i]] ??
-                                                      SFSymbols.question,
+                                              // leading: Icon(
+                                              //     iconMap[myCategoriesIcons[
+                                              //             i]] ??
+                                              //         SFSymbols.question,
+                                              //     color: Colors.white,
+                                              //     size: 28),
+                                              leading: Icon(iconMap[state.categories[i].icon] ?? SFSymbols.question,
                                                   color: Colors.white,
                                                   size: 28),
                                               title: Text(
@@ -397,9 +335,10 @@ class _AddExpenseState extends State<AddExpense> {
                             DateTime? newDate = await showDatePicker(
                               context: context,
                               initialDate: expense.date,
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(
-                                  2100), //DateTime.now().add(const Duration(days: 365)));
+                              firstDate: DateTime(2000),
+                              // lastDate: DateTime(
+                              //     2100), //DateTime.now().add(const Duration(days: 365)));
+                              lastDate: DateTime.now(),
                               helpText: 'Select A Date',
                               cancelText: 'Cancel',
                               confirmText: 'Done',

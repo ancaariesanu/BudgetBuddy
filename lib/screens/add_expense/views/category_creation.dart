@@ -5,44 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:uuid/uuid.dart';
+import 'package:budget_buddy/screens/add_expense/views/category_constants.dart';
 
 Future getCategoryCreation(BuildContext context) {
-  List<String> myCategoriesIcons = [
-    'airplane',
-    'archivebox.fill',
-    'bag.fill',
-    'bed.double.fill',
-    'bolt.fill',
-    'book.fill',
-    'briefcase.fill',
-    'car.fill',
-    'cart',
-    'chart.pie',
-    'creditcard.fill',
-    'drop.fill',
-    'exclamationmark.triangle.fill',
-    'film',
-    'flame.fill',
-    'gamecontroller.fill',
-    'gift.fill',
-    'hand.tap',
-    'heart.fill',
-    'house.fill',
-    'lock.fill',
-    'macbook',
-    'music.note.list',
-    'paintbrush.pointed.fill',
-    'phone.fill',
-    'play.fill',
-    'scissors',
-    'shield.fill',
-    'sparkles',
-    'ticket.fill',
-    'tram.fill',
-    'tv.fill',
-    'wrench.and.screwdriver.fill'
-  ];
-
+  
   return showDialog(
       context: context,
       builder: (ctx) {
@@ -178,10 +144,19 @@ Future getCategoryCreation(BuildContext context) {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10),
-                                                    image: DecorationImage(
-                                                        image: AssetImage(
-                                                            'assets/${myCategoriesIcons[i]}.png'))),
+                                                    // image: DecorationImage(
+                                                    //     image: AssetImage(
+                                                    //         'assets/${myCategoriesIcons[i]}.png'))),
+                                                    
                                               ),
+                                              child: Center(
+                                                child: Icon(
+                                                  iconMap[myCategoriesIcons[i]] ?? SFSymbols.question,
+                                                  size: 30,
+                                                  //color: Colors.black54,
+                                                ),
+                                              ),
+                                            ),
                                             );
                                           }),
                                     ),
@@ -302,12 +277,14 @@ Future getCategoryCreation(BuildContext context) {
                                       // create category object and pop!!!
                                       setState(() {
                                         category.categoryId = const Uuid().v1();
-                                        category.name = categoryNameController.text;
+                                        category.name =
+                                            categoryNameController.text;
                                         category.icon = iconSelected;
                                         category.color = categoryColor.value;
-                                        
                                       });
-                                      context.read<CreateCategoryBloc>().add(CreateCategory(category));
+                                      context
+                                          .read<CreateCategoryBloc>()
+                                          .add(CreateCategory(category));
                                     },
                                     style: TextButton.styleFrom(
                                       padding: EdgeInsets.zero,

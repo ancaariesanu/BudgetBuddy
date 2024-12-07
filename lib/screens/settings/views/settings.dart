@@ -129,7 +129,7 @@ class Settings extends StatelessWidget {
                 height: 75,
               ),
               const Text(
-                "Change Name",
+                "Set Name",
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.w700,

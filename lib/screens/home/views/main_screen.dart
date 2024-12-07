@@ -1,14 +1,45 @@
-import 'package:budget_buddy/data/data.dart';
 import 'package:budget_buddy/screens/discounts/views/discounts.dart';
 import 'package:budget_buddy/screens/settings/views/settings.dart';
+import 'package:budget_buddy/screens/view_all_expenses/view_all_expenses.dart';
+import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
+import 'package:budget_buddy/screens/add_expense/views/category_constants.dart';
+import 'package:intl/intl.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+  final List<Expense> expenses;
+  
+  const MainScreen(this.expenses, {super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    // Group expenses by categories and calculate totals
+    final Map<String, Map<String, dynamic>> groupedCategories = {};
+
+    for (var expense in expenses) {
+      final categoryName = expense.category.name;
+      if (!groupedCategories.containsKey(categoryName)) {
+        groupedCategories[categoryName] = {
+          'total': 0.0,
+          'latestDate': expense.date,
+          'color': expense.category.color,
+          'icon': expense.category.icon,
+        };
+      }
+
+      groupedCategories[categoryName]!['total'] += expense.amount;
+      if (expense.date.isAfter(groupedCategories[categoryName]!['latestDate'])) {
+        groupedCategories[categoryName]!['latestDate'] = expense.date;
+      }
+    }
+
+    // Convert map to a sorted list based on latestDate
+    final sortedCategories = groupedCategories.entries.toList()
+      ..sort((a, b) => b.value['latestDate'].compareTo(a.value['latestDate']));
+
+    
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
@@ -66,9 +97,10 @@ class MainScreen extends StatelessWidget {
                       IconButton(
                         onPressed: () {
                           Navigator.push(
-                            context, 
+                            context,
                             MaterialPageRoute<void>(
-                              builder: (BuildContext context) => const Discounts(),
+                              builder: (BuildContext context) =>
+                                  const Discounts(),
                             ),
                           );
                         },
@@ -77,9 +109,10 @@ class MainScreen extends StatelessWidget {
                       IconButton(
                         onPressed: () {
                           Navigator.push(
-                            context, 
+                            context,
                             MaterialPageRoute<void>(
-                              builder: (BuildContext context) => const Settings(),
+                              builder: (BuildContext context) =>
+                                  const Settings(),
                             ),
                           );
                         },
@@ -233,16 +266,25 @@ class MainScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Transactions",
+                  "Your Categories",
                   style: TextStyle(
                       fontSize: 18,
                       color: Theme.of(context).colorScheme.onSurface,
                       fontWeight: FontWeight.w700),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    //aiciiiiiiiiiiii!!!!!!!!!!!!!!!!
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            ViewAllExpenses(expenses),
+                      ),
+                    );
+                  },
                   child: Text(
-                    "View All",
+                    "View All Transactions",
                     style: TextStyle(
                         fontSize: 14,
                         color: Theme.of(context).colorScheme.outline,
@@ -256,8 +298,14 @@ class MainScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: transactionsData.length,
+                  itemCount: sortedCategories.length,
                   itemBuilder: (context, int i) {
+                    final category = sortedCategories[i];
+                    final categoryName = category.key;
+                    final totalAmount = category.value['total'];
+                    final lastUpdatedDate = category.value['latestDate'];
+                    final isToday = DateTime.now().difference(lastUpdatedDate).inDays == 0;
+
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
                       child: Container(
@@ -278,17 +326,29 @@ class MainScreen extends StatelessWidget {
                                         width: 50,
                                         height: 50,
                                         decoration: BoxDecoration(
-                                            color: transactionsData[i]['color'],
+                                            color: Color(
+                                                category.value['color']),
                                             shape: BoxShape.circle),
                                       ),
-                                      transactionsData[i]['icon']
+                                      Icon(
+                                        iconMap[category.value['icon']] ??
+                                            SFSymbols.question,
+                                        color: Colors.white,
+                                      ),
+                                      // Image.asset(
+                                      //   'assets/${myCategoriesIcons[i]}.png',
+                                      //   //scale: 2,
+                                      //   color: Colors.white,
+                                      // )
+                                      //transactionsData[i]['icon']
                                     ],
                                   ),
                                   const SizedBox(
                                     width: 12,
                                   ),
                                   Text(
-                                    transactionsData[i]['name'],
+                                    //transactionsData[i]['name'],
+                                    categoryName,
                                     style: TextStyle(
                                         fontSize: 15,
                                         color: Theme.of(context)
@@ -302,7 +362,11 @@ class MainScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    transactionsData[i]['totalAmount'],
+                                    //transactionsData[i]['totalAmount'],
+                                    //expenses[i].amount.toString(),
+                                    //"- ${expenses[i].category.totalExpenses.toString()} RON",
+                                    "- ${totalAmount.toStringAsFixed(2)} RON",
+                                    //"- ${expenses[i].amount.toString()} RON",
                                     style: TextStyle(
                                         fontSize: 15,
                                         color: Theme.of(context)
@@ -311,7 +375,9 @@ class MainScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    transactionsData[i]['date'],
+                                    isToday ? "Today" :
+                                    //transactionsData[i]['date'],
+                                    DateFormat('dd/MM/yyyy').format(lastUpdatedDate),
                                     style: TextStyle(
                                         fontSize: 15,
                                         color: Theme.of(context)
@@ -319,6 +385,15 @@ class MainScreen extends StatelessWidget {
                                             .outline,
                                         fontWeight: FontWeight.w500),
                                   ),
+                                  // Text(
+                                  //   "(Last Updated)",
+                                  //   style: TextStyle(
+                                  //       fontSize: 7,
+                                  //       color: Theme.of(context)
+                                  //           .colorScheme
+                                  //           .outline,
+                                  //       fontWeight: FontWeight.w500),
+                                  // ),
                                 ],
                               ),
                             ],

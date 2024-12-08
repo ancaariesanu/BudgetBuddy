@@ -80,9 +80,9 @@ class _StatScreenState extends State<StatScreen> {
                         });
                       },
                       decoration: InputDecoration(
-                        constraints: const BoxConstraints(
-                          maxWidth: 360,
-                        ),
+                        // constraints: const BoxConstraints(
+                        //   maxWidth: 360,
+                        // ),
                         filled: true,
                         isDense: true,
                         fillColor: Colors.white,
@@ -175,7 +175,7 @@ class _StatScreenState extends State<StatScreen> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.circular(25)),
+                    color: Colors.white, borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 25, 0, 15),
                   child: BlocBuilder<GetExpensesBloc, GetExpensesState>(

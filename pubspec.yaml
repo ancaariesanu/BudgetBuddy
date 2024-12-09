@@ -37,4 +37,4 @@ flutter:
     fonts:
       - asset: packages/flutter_sfsymbols/fonts/sficonsets.ttf
   assets:
-    - assets/
+    - assets/images/

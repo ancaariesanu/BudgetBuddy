@@ -208,13 +208,15 @@ import 'dart:math';
 import 'package:budget_buddy/screens/settings/blocs/create_income_bloc/create_income_bloc.dart';
 import 'package:budget_buddy/screens/settings/blocs/get_incomes_bloc/get_incomes_bloc.dart';
 import 'package:budget_buddy/screens/settings/views/income_creation.dart';
+import 'package:budget_buddy/screens/view_all_incomes/view_all_incomes.dart';
 import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 
 class Settings extends StatelessWidget {
-  const Settings({super.key});
+  final List<Income> incomes;
+  const Settings({required this.incomes, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -254,56 +256,155 @@ class Settings extends StatelessWidget {
                   ),
                 ),
                 body: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(36.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          height: kToolbarHeight,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: const [
-                                BoxShadow(
-                                  blurRadius: 2.5,
-                                  spreadRadius: 0.5,
-                                  color: Color.fromARGB(255, 137, 131, 131),
-                                  offset: Offset(2, 2),
-                                ),
-                              ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 105,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: kToolbarHeight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: const [
+                              BoxShadow(
+                                blurRadius: 2.5,
+                                spreadRadius: 0.5,
+                                color: Color.fromARGB(255, 137, 131, 131),
+                                offset: Offset(2, 2),
+                              ),
+                            ],
+                          ),
+                          child: TextButton.icon(
+                            onPressed: () async {
+                              final getIncomesBloc =
+                                  context.read<GetIncomesBloc>();
+                              await getIncomeCreation(context);
+                              getIncomesBloc.add(GetIncomes());
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
-                            child: TextButton.icon(
-                              onPressed: () async {
-                                final getIncomesBloc =
-                                    context.read<GetIncomesBloc>();
-                                await getIncomeCreation(context);
-                                getIncomesBloc.add(GetIncomes());
-                              },
-                              style: TextButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              icon: const Icon(
-                                SFSymbols.plus_app,
-                                color: Color.fromARGB(255, 72, 72, 72),
-                              ),
-                              label: Text(
-                                'Add Income',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Theme.of(context).colorScheme.outline,
-                                ),
+                            icon: const Icon(
+                              SFSymbols.plus_app,
+                              color: Color.fromARGB(255, 72, 72, 72),
+                            ),
+                            label: Text(
+                              'Add Income',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).colorScheme.outline,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 45,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: kToolbarHeight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: const [
+                              BoxShadow(
+                                blurRadius: 2.5,
+                                spreadRadius: 0.5,
+                                color: Color.fromARGB(255, 137, 131, 131),
+                                offset: Offset(2, 2),
+                              ),
+                            ],
+                          ),
+                          child: TextButton.icon(
+                            onPressed: () async {
+                              //view all incomes logic!!!!
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                    ViewAllIncomes(state.incomes),
+                                ),
+                              );
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            icon: const Icon(
+                              SFSymbols.tray_full,
+                              color: Color.fromARGB(255, 72, 72, 72),
+                            ),
+                            label: Text(
+                              'View All Income Details',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).colorScheme.outline,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 350,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        height: kToolbarHeight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Theme.of(context).colorScheme.primary,
+                                Theme.of(context).colorScheme.secondary,
+                                Theme.of(context).colorScheme.tertiary,
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: const [
+                              BoxShadow(
+                                blurRadius: 2.5,
+                                spreadRadius: 0.5,
+                                color: Color.fromARGB(255, 137, 131, 131),
+                                offset: Offset(2, 2),
+                              ),
+                            ],
+                          ),
+                          child: TextButton.icon(
+                            onPressed: () async {
+                              //log out logic!!!!
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            icon: const Icon(
+                              SFSymbols.square_arrow_left,
+                              color: Colors.white,
+                            ),
+                            label: const Text(
+                              'Log Out',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

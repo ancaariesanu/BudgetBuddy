@@ -9,8 +9,9 @@ import 'package:intl/intl.dart';
 
 class MainScreen extends StatelessWidget {
   final List<Expense> expenses;
+  final List<Income> incomes;
   
-  const MainScreen(this.expenses, {super.key});
+  const MainScreen(this.expenses, this.incomes, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +119,7 @@ class MainScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
-                                  const Settings(),
+                                  Settings(incomes: incomes),
                             ),
                           );
                         },

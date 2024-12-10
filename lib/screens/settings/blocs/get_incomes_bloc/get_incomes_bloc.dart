@@ -12,8 +12,8 @@ class GetIncomesBloc extends Bloc<GetIncomesEvent, GetIncomesState> {
     on<GetIncomesEvent>((event, emit) async {
       emit(GetIncomesLoading());
       try {
-        //final incomes = await incomeRepository.getIncomes(); // Use income repository method
-        emit(GetIncomesSuccess());
+        final incomes = await incomeRepository.getIncomes(); // Use income repository method
+        emit( GetIncomesSuccess(incomes));
       } catch (e) {
         emit(GetIncomesFailure());
       }
@@ -22,8 +22,8 @@ class GetIncomesBloc extends Bloc<GetIncomesEvent, GetIncomesState> {
     on<FetchMonthlyIncomes>((event, emit) async {
       emit(GetIncomesLoading());
       try {
-        //final incomes = await incomeRepository.getIncomesByMonth(event.year, event.month);
-        emit(GetIncomesSuccess());
+        final incomes = await incomeRepository.getIncomesByMonth(event.year, event.month);
+        emit(GetIncomesSuccess(incomes));
       } catch (e) {
         emit(GetIncomesFailure());
       }

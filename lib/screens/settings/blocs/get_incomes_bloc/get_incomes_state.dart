@@ -13,4 +13,11 @@ final class GetIncomesFailure extends GetIncomesState {}
 
 final class GetIncomesLoading extends GetIncomesState {}
 
-final class GetIncomesSuccess extends GetIncomesState {}
+final class GetIncomesSuccess extends GetIncomesState {
+  final List<Income> incomes;
+
+  const GetIncomesSuccess(this.incomes);
+
+  @override
+  List<Object> get props => [incomes];
+}

@@ -63,4 +63,8 @@ The Settings Page empowers users to customize their experience:
 <img width="994" alt="Screenshot 2024-10-19 at 13 41 25" src="https://github.com/user-attachments/assets/3414d612-bf72-4ed7-b0ea-6b887941bf3f">
 
 
+### Until Now Progress
+<img width="1805" alt="1" src="https://github.com/user-attachments/assets/994b0581-26f4-4ca5-8690-10ff183b77b5" />
+<img width="1812" alt="2" src="https://github.com/user-attachments/assets/5cd30288-2d8b-4515-9fb9-b4fd1860ad2c" />
+<img width="1084" alt="3" src="https://github.com/user-attachments/assets/8b92f2da-21e2-4869-b346-de87c2200fdf" />
 

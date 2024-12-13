@@ -13,7 +13,7 @@ class Discounts extends StatefulWidget {
 class _DiscountsState extends State<Discounts> {
 
   final List<int> targets = [10, 15, 25, 30, 35];
-  int currentReceipts = 13; 
+  int currentReceipts = 17; 
 
   List<bool> isExpandedList = [];
 
@@ -196,6 +196,9 @@ class _DiscountsState extends State<Discounts> {
                                 decoration: BoxDecoration(
                                   color: isUnlocked ? Colors.white : Colors.grey.shade300,
                                   borderRadius: BorderRadius.circular(25),
+                                  border: Border.all(
+                                    color: const Color.fromARGB(100, 137, 131, 131),
+                                    width: 0.5),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),

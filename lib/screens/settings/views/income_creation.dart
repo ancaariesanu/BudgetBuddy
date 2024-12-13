@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import 'package:budget_buddy/screens/add_expense/views/category_constants.dart';
 
@@ -19,6 +20,7 @@ Future getIncomeCreation(BuildContext context) {
 
         TextEditingController incomeAmountController = TextEditingController();
         TextEditingController incomeDetailsController = TextEditingController();
+        TextEditingController dateController = TextEditingController();
         
         Income income = Income.empty;
 
@@ -121,6 +123,48 @@ Future getIncomeCreation(BuildContext context) {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide.none)),
+                        ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        ////aiciiiiiii
+                        TextFormField(
+                          controller: dateController,
+                          textAlignVertical: TextAlignVertical.center,
+                          readOnly: true,
+                          onTap: () async {
+                            DateTime? newDate = await showDatePicker(
+                              context: context,
+                              initialDate: income.date,
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime.now(),
+                              helpText: 'Select A Date',
+                              cancelText: 'Cancel',
+                              confirmText: 'Done',
+                            );
+                            if (newDate != null) {
+                              setState(() {
+                                dateController.text =
+                                    DateFormat('dd/MM/yyyy').format(newDate);
+                                income.date = newDate;
+                              });
+                            }
+                          },
+                          decoration: InputDecoration(
+                            constraints: const BoxConstraints(
+                              maxWidth: 360,
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            prefixIcon: const Icon(
+                              SFSymbols.calendar_badge_plus,
+                              color: Color.fromARGB(255, 72, 72, 72)),
+                            hintText: 'Date',
+                            hintStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.outline),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none)),
                         ),
                         const SizedBox(
                           height: 25,

@@ -30,6 +30,8 @@ class ViewAllIncomes extends StatelessWidget {
         return dateB.compareTo(dateA); // Descending order
       });
 
+    final numberFormat = NumberFormat.currency(locale: 'en_US', symbol: '');
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -138,7 +140,8 @@ class ViewAllIncomes extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    "+ ${income.amount.toStringAsFixed(2)} RON",
+                                    //"+ ${income.amount.toStringAsFixed(2)} RON",
+                                    "+ ${numberFormat.format(income.amount)} RON",
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: Theme.of(context)

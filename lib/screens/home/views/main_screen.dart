@@ -42,10 +42,24 @@ class MainScreen extends StatelessWidget {
       (sum, expense) => sum + expense.amount,
     );
 
+    // Calculate total incomes
+    final totalIncomes = incomes.fold<double>(
+      0.0,
+      (sum, expense) => sum + expense.amount,
+    );
+
     // Convert map to a sorted list based on latestDate
     final sortedCategories = groupedCategories.entries.toList()
       ..sort((a, b) => b.value['latestDate'].compareTo(a.value['latestDate']));
 
+    // Sort incomes by date to get the latest income
+    final latestIncome = incomes.isNotEmpty
+      ? incomes.reduce((a, b) => a.date.isAfter(b.date) ? a : b)
+      : null;
+
+    final latestIncomeAmount = latestIncome?.amount ?? 0.0;
+
+    final numberFormat = NumberFormat.currency(locale: 'en_US', symbol: '');
     
     return SafeArea(
       child: Padding(
@@ -119,7 +133,8 @@ class MainScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
-                                  Settings(incomes: incomes),
+                                  //Settings(incomes: incomes),
+                                  const Settings(),
                             ),
                           );
                         },
@@ -165,9 +180,10 @@ class MainScreen extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  const Text(
-                    "RON  12.640,34",
-                    style: TextStyle(
+                  Text(
+                    //"RON  ${totalIncomes.toStringAsFixed(2)}",
+                    "RON  ${numberFormat.format(totalIncomes)}",
+                    style: const TextStyle(
                         fontSize: 35,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
@@ -195,19 +211,20 @@ class MainScreen extends StatelessWidget {
                             const SizedBox(
                               width: 8,
                             ),
-                            const Column(
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Income",
+                                const Text(
+                                  "Last Income",
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w700),
                                 ),
                                 Text(
-                                  "60.000,0",
-                                  style: TextStyle(
+                                  //"60.000,0",
+                                  numberFormat.format(latestIncomeAmount),
+                                  style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w500),
@@ -235,14 +252,15 @@ class MainScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  "Expenses",
+                                  "All Expenses",
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w700),
                                 ),
                                 Text(
-                                  totalExpenses.toStringAsFixed(2),
+                                  //totalExpenses.toStringAsFixed(2),
+                                  numberFormat.format(totalExpenses),
                                   style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,
@@ -357,7 +375,8 @@ class MainScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    "- ${totalAmount.toStringAsFixed(2)} RON",
+                                    //"- ${totalAmount.toStringAsFixed(2)} RON",
+                                    "- ${numberFormat.format(totalAmount)} RON",
                                     style: TextStyle(
                                         fontSize: 15,
                                         color: Theme.of(context)

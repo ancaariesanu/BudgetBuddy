@@ -301,6 +301,12 @@
 //   }
 // }
 
+
+
+
+
+
+
 import 'dart:math';
 
 import 'package:budget_buddy/screens/settings/blocs/create_income_bloc/create_income_bloc.dart';
@@ -360,7 +366,7 @@ class Settings extends StatelessWidget {
                             //     Theme.of(context).colorScheme.tertiary.withOpacity(0.4)
                             //   ],
                             // ),
-                            color: const Color.fromARGB(255, 91, 91, 91),
+                            color: const Color.fromARGB(255, 160, 104, 20),
                             borderRadius: BorderRadius.circular(25),
                             boxShadow: const [
                               BoxShadow(

@@ -7,6 +7,7 @@ import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import 'package:budget_buddy/screens/add_expense/views/category_constants.dart';
@@ -53,6 +54,53 @@ class _AddExpenseState extends State<AddExpense> {
     return BlocListener<CreateExpenseBloc, CreateExpenseState>(
       listener: (context, state) {
         if (state is CreateExpenseSuccess) {
+          Get.snackbar(
+            "SUCCESS",
+            "Expense added successfully!",
+            titleText: const Text(
+              "SUCCESS",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            messageText: const Text(
+              "Expense added successfully!",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500
+              ),
+            ),
+            colorText: Colors.white,
+            duration: const Duration(seconds: 8),
+            //instantInit: true,
+            snackPosition: SnackPosition.TOP,
+            icon: const Icon(SFSymbols.checkmark_square_fill, color: Colors.white, size: 35.0),
+            padding: const EdgeInsets.all(20.0),
+            margin: const EdgeInsets.all(10.0),
+            borderRadius: 25,
+            borderColor: Colors.grey.shade600,
+            borderWidth: 2.0,
+            backgroundColor: Colors.green.shade700,
+            isDismissible: true,
+            //showProgressIndicator: true,
+            snackStyle: SnackStyle.FLOATING,
+            forwardAnimationCurve: Curves.easeOutBack,
+            reverseAnimationCurve: Curves.easeInBack,
+            animationDuration: const Duration(milliseconds: 800),
+            backgroundGradient: LinearGradient(
+              colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
+                Theme.of(context).colorScheme.tertiary,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            maxWidth: 350.0,
+          );
           Navigator.pop(context, expense);
         } else if (state is CreateExpenseLoading) {
           setState(() {

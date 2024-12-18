@@ -38,6 +38,7 @@ import 'package:budget_buddy/screens/settings/blocs/get_incomes_bloc/get_incomes
 import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 class MyAppView extends StatelessWidget {
   const MyAppView({super.key});
@@ -57,7 +58,7 @@ class MyAppView extends StatelessWidget {
           )..add(GetIncomes()),
         ),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Budget Buddy",
         theme: ThemeData(

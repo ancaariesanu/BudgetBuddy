@@ -40,8 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, expenseState) {
           return BlocBuilder<GetIncomesBloc, GetIncomesState>(
             builder: (context, incomeState) {
-              if (expenseState is GetExpensesSuccess &&
-                  incomeState is GetIncomesSuccess) {
+              if (expenseState is GetExpensesSuccess && incomeState is GetIncomesSuccess) {
                 return Scaffold(
                   bottomNavigationBar: ClipRRect(
                     borderRadius:

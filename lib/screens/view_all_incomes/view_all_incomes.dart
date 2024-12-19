@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
-import 'package:budget_buddy/screens/add_expense/views/category_constants.dart';
 import 'package:intl/intl.dart';
 
 class ViewAllIncomes extends StatelessWidget {

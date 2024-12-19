@@ -1,8 +1,6 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_repository/expense_repository.dart';
-import 'package:expense_repository/src/entities/income_entity.dart';
-import 'package:expense_repository/src/income_repo.dart';
 
 class FirebaseIncomeRepo implements IncomeRepository {
   final incomeCollection = FirebaseFirestore.instance.collection('incomes');

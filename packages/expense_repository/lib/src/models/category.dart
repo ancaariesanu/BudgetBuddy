@@ -1,5 +1,4 @@
 import 'package:expense_repository/src/entities/entities.dart';
-import 'package:flutter/material.dart';
 
 class Category {
   String categoryId;

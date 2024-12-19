@@ -30,58 +30,142 @@ Future getCategoryCreation(BuildContext context) {
                 listener: (context, state) {
                   if (state is CreateCategorySuccess) {
                     Get.snackbar(
-                      "SUCCESS",
-                      "Category created successfully!",
-                      titleText: const Text(
-                        "SUCCESS",
+                      "Success",
+                      "Created category!",
+                      titleText: Text(
+                        "Success",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
+                          color:  Colors.green.shade900,
+                          fontSize: 18.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      messageText: const Text(
-                        "Category created successfully!",
+                      messageText: Text(
+                        "Created Category!",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
+                          color: Colors.green.shade900,
+                          fontSize: 14.0,
                           fontWeight: FontWeight.w500
                         ),
                       ),
-                      colorText: Colors.white,
-                      duration: const Duration(seconds: 8),
-                      //instantInit: true,
+                      colorText: Colors.green.shade900,
+                      duration: const Duration(seconds: 10),
+                      instantInit: true,
                       snackPosition: SnackPosition.TOP,
-                      icon: const Icon(SFSymbols.checkmark_square_fill, color: Colors.white, size: 35.0),
-                      padding: const EdgeInsets.all(20.0),
+                      icon: Icon(SFSymbols.checkmark, color:  Colors.green.shade900, size: 35.0),
+                      padding: const EdgeInsets.all(10.0),
                       margin: const EdgeInsets.all(10.0),
-                      borderRadius: 25,
-                      borderColor: Colors.grey.shade700,
-                      borderWidth: 2.0,
-                      backgroundColor: Colors.green.shade700,
+                      borderRadius: 8,
+                      borderColor: Colors.green.shade600,
+                      borderWidth: 0.9,
+                      backgroundColor: Colors.green.shade50,
                       isDismissible: true,
-                      //showProgressIndicator: true,
+                      mainButton: TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Icon(SFSymbols.xmark, color: Colors.grey.shade600, size: 20,),
+                      ),
                       snackStyle: SnackStyle.FLOATING,
                       forwardAnimationCurve: Curves.easeOutBack,
                       reverseAnimationCurve: Curves.easeInBack,
                       animationDuration: const Duration(milliseconds: 800),
-                      backgroundGradient: LinearGradient(
-                        colors: [
-                          Theme.of(context).colorScheme.primary,
-                          Theme.of(context).colorScheme.secondary,
-                          Theme.of(context).colorScheme.tertiary,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      maxWidth: 350.0,
+                      maxWidth: 300.0,
                     );
                     
                     Navigator.pop(ctx, category);
                   } else if (state is CreateCategoryLoading) {
                     setState(() {
+                      Get.snackbar(
+                        "Loading",
+                        "Please wait!",
+                        titleText: Text(
+                          "Loading",
+                          style: TextStyle(
+                            color:  Colors.blue.shade900,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        messageText: Text(
+                          "Please wait!",
+                          style: TextStyle(
+                            color: Colors.blue.shade900,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500
+                          ),
+                        ),
+                        colorText: Colors.blue.shade900,
+                        duration: const Duration(seconds: 1),
+                        instantInit: true,
+                        snackPosition: SnackPosition.TOP,
+                        icon: Icon(SFSymbols.hourglass, color:  Colors.blue.shade900, size: 35.0),
+                        padding: const EdgeInsets.all(10.0),
+                        margin: const EdgeInsets.all(10.0),
+                        borderRadius: 8,
+                        borderColor: Colors.blue.shade600,
+                        borderWidth: 0.9,
+                        backgroundColor: Colors.blue.shade50,
+                        isDismissible: true,
+                        mainButton: TextButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: Icon(SFSymbols.xmark, color: Colors.grey.shade600, size: 20,),
+                        ),
+                        snackStyle: SnackStyle.FLOATING,
+                        forwardAnimationCurve: Curves.easeOutBack,
+                        reverseAnimationCurve: Curves.easeInBack,
+                        animationDuration: const Duration(milliseconds: 800),
+                        maxWidth: 300.0,
+                      );
+
                       isLoading = true;
                     });
+                  } else if(state is CreateCategoryFailure) {
+                    Get.snackbar(
+                      "Error",
+                      "Could not create category!",
+                      titleText: Text(
+                        "Error",
+                        style: TextStyle(
+                          color:  Colors.red.shade900,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      messageText: Text(
+                        "Could not create category!",
+                        style: TextStyle(
+                          color: Colors.red.shade900,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                      colorText: Colors.red.shade900,
+                      duration: const Duration(seconds: 100),
+                      instantInit: true,
+                      snackPosition: SnackPosition.TOP,
+                      icon: Icon(SFSymbols.xmark, color:  Colors.red.shade900, size: 35.0),
+                      padding: const EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.all(10.0),
+                      borderRadius: 8,
+                      borderColor: Colors.red.shade600,
+                      borderWidth: 0.9,
+                      backgroundColor: Colors.red.shade50,
+                      isDismissible: true,
+                      mainButton: TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Icon(SFSymbols.xmark, color: Colors.grey.shade600, size: 20,),
+                      ),
+                      snackStyle: SnackStyle.FLOATING,
+                      forwardAnimationCurve: Curves.easeOutBack,
+                      reverseAnimationCurve: Curves.easeInBack,
+                      animationDuration: const Duration(milliseconds: 800),
+                      maxWidth: 300.0,
+                    );
                   }
                 },
                 child: AlertDialog(

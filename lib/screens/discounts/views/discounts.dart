@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:budget_buddy/screens/discounts/views/discounts_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';

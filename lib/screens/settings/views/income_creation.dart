@@ -1,16 +1,12 @@
 import 'dart:math';
-
-import 'package:budget_buddy/screens/add_expense/blocs/create_category_bloc/create_category_bloc.dart';
 import 'package:budget_buddy/screens/settings/blocs/create_income_bloc/create_income_bloc.dart';
 import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
-import 'package:budget_buddy/screens/add_expense/views/category_constants.dart';
 
 Future getIncomeCreation(BuildContext context) {
   
@@ -33,57 +29,141 @@ Future getIncomeCreation(BuildContext context) {
                 listener: (context, state) {
                   if (state is CreateIncomeSuccess) {
                     Get.snackbar(
-                      "SUCCESS",
-                      "Category created successfully!",
-                      titleText: const Text(
-                        "SUCCESS",
+                      "Success",
+                      "Added income!",
+                      titleText: Text(
+                        "Success",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
+                          color:  Colors.green.shade900,
+                          fontSize: 18.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      messageText: const Text(
-                        "Income added successfully!",
+                      messageText: Text(
+                        "Added income!",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
+                          color: Colors.green.shade900,
+                          fontSize: 14.0,
                           fontWeight: FontWeight.w500
                         ),
                       ),
-                      colorText: Colors.white,
-                      duration: const Duration(seconds: 8),
-                      //instantInit: true,
+                      colorText: Colors.green.shade900,
+                      duration: const Duration(seconds: 10),
+                      instantInit: true,
                       snackPosition: SnackPosition.TOP,
-                      icon: const Icon(SFSymbols.checkmark_square_fill, color: Colors.white, size: 35.0),
-                      padding: const EdgeInsets.all(20.0),
+                      icon: Icon(SFSymbols.checkmark, color:  Colors.green.shade900, size: 35.0),
+                      padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.all(10.0),
-                      borderRadius: 25,
-                      borderColor: Colors.grey.shade700,
-                      borderWidth: 2.0,
-                      backgroundColor: Colors.green.shade700,
+                      borderRadius: 8,
+                      borderColor: Colors.green.shade600,
+                      borderWidth: 0.9,
+                      backgroundColor: Colors.green.shade50,
                       isDismissible: true,
-                      //showProgressIndicator: true,
+                      mainButton: TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Icon(SFSymbols.xmark, color: Colors.grey.shade600, size: 20,),
+                      ),
                       snackStyle: SnackStyle.FLOATING,
                       forwardAnimationCurve: Curves.easeOutBack,
                       reverseAnimationCurve: Curves.easeInBack,
                       animationDuration: const Duration(milliseconds: 800),
-                      backgroundGradient: LinearGradient(
-                        colors: [
-                          Theme.of(context).colorScheme.primary,
-                          Theme.of(context).colorScheme.secondary,
-                          Theme.of(context).colorScheme.tertiary,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
                       maxWidth: 350.0,
                     );
+
                     Navigator.pop(ctx, income);
                   } else if (state is CreateIncomeLoading) {
                     setState(() {
+                      Get.snackbar(
+                        "Loading",
+                        "Please wait!",
+                        titleText: Text(
+                          "Loading",
+                          style: TextStyle(
+                            color:  Colors.blue.shade900,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        messageText: Text(
+                          "Please wait!",
+                          style: TextStyle(
+                            color: Colors.blue.shade900,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500
+                          ),
+                        ),
+                        colorText: Colors.blue.shade900,
+                        duration: const Duration(seconds: 1),
+                        instantInit: true,
+                        snackPosition: SnackPosition.TOP,
+                        icon: Icon(SFSymbols.hourglass, color:  Colors.blue.shade900, size: 35.0),
+                        padding: const EdgeInsets.all(10.0),
+                        margin: const EdgeInsets.all(10.0),
+                        borderRadius: 8,
+                        borderColor: Colors.blue.shade600,
+                        borderWidth: 0.9,
+                        backgroundColor: Colors.blue.shade50,
+                        isDismissible: true,
+                        mainButton: TextButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: Icon(SFSymbols.xmark, color: Colors.grey.shade600, size: 20,),
+                        ),
+                        snackStyle: SnackStyle.FLOATING,
+                        forwardAnimationCurve: Curves.easeOutBack,
+                        reverseAnimationCurve: Curves.easeInBack,
+                        animationDuration: const Duration(milliseconds: 800),
+                        maxWidth: 300.0,
+                      );
                       isLoading = true;
                     });
+                  } else if(state is CreateIncomeFailure) {
+                    Get.snackbar(
+                      "Error",
+                      "Could not add income!",
+                      titleText: Text(
+                        "Error",
+                        style: TextStyle(
+                          color:  Colors.red.shade900,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      messageText: Text(
+                        "Could not add income!",
+                        style: TextStyle(
+                          color: Colors.red.shade900,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                      colorText: Colors.red.shade900,
+                      duration: const Duration(seconds: 100),
+                      instantInit: true,
+                      snackPosition: SnackPosition.TOP,
+                      icon: Icon(SFSymbols.xmark, color:  Colors.red.shade900, size: 35.0),
+                      padding: const EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.all(10.0),
+                      borderRadius: 8,
+                      borderColor: Colors.red.shade600,
+                      borderWidth: 0.9,
+                      backgroundColor: Colors.red.shade50,
+                      isDismissible: true,
+                      mainButton: TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Icon(SFSymbols.xmark, color: Colors.grey.shade600, size: 20,),
+                      ),
+                      snackStyle: SnackStyle.FLOATING,
+                      forwardAnimationCurve: Curves.easeOutBack,
+                      reverseAnimationCurve: Curves.easeInBack,
+                      animationDuration: const Duration(milliseconds: 800),
+                      maxWidth: 300.0,
+                    );
                   }
                 },
                 child: AlertDialog(

@@ -66,84 +66,82 @@ class MainScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
         child: Column(
           children: [
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey[400]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey[400]),
+                        ),
+                        const Icon(
+                          SFSymbols.person_fill,
+                          size: 30,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Welcome back!",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).colorScheme.outline),
+                        ),
+                        Text(
+                          "Robert Negre",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.onSurface),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                const Discounts(),
                           ),
-                          const Icon(
-                            SFSymbols.person_fill,
-                            size: 30,
-                            color: Colors.black,
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Welcome back!",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Theme.of(context).colorScheme.outline),
+                        );
+                      },
+                      icon: const Icon(SFSymbols.gift_fill, size: 30),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                //Settings(incomes: incomes),
+                                const Settings(),
                           ),
-                          Text(
-                            "Robert Negre",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.onSurface),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  const Discounts(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(SFSymbols.gift_fill, size: 30),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  //Settings(incomes: incomes),
-                                  const Settings(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(SFSymbols.gear_alt_fill, size: 30),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                        );
+                      },
+                      icon: const Icon(SFSymbols.gear_alt_fill, size: 30),
+                    ),
+                  ],
+                ),
+              ],
             ),
             const SizedBox(
               height: 25,

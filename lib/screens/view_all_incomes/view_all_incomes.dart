@@ -13,21 +13,14 @@ class ViewAllIncomes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // Group incomes by date
-    final Map<String, List<Income>> groupedIncomes = {};
+    final allIncomes = incomes.toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
 
-    for (var income in incomes) {
+    final dailyTotals = <String, double>{};
+    for (final income in allIncomes) {
       final dateKey = DateFormat('dd/MM/yyyy').format(income.date);
-      groupedIncomes.putIfAbsent(dateKey, () => []).add(income);
+      dailyTotals[dateKey] = (dailyTotals[dateKey] ?? 0) + income.amount;
     }
-
-    // Sort dates in descending order
-    final sortedDates = groupedIncomes.keys.toList()
-      ..sort((a, b) {
-        final dateA = DateFormat('dd/MM/yyyy').parse(a);
-        final dateB = DateFormat('dd/MM/yyyy').parse(b);
-        return dateB.compareTo(dateA); // Descending order
-      });
 
     final numberFormat = NumberFormat.currency(locale: 'en_US', symbol: '');
 
@@ -53,41 +46,53 @@ class ViewAllIncomes extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(26.0),
           child: ListView.builder(
-            itemCount: sortedDates.length,
+            itemCount: allIncomes.length,
             itemBuilder: (context, index) {
-              final dateKey = sortedDates[index];
-              final incomesForDate = groupedIncomes[dateKey]!;
-
-              // Sort incomes for the current date by time in descending order
-              incomesForDate.sort((a, b) => b.date.compareTo(a.date));
+              final income = allIncomes[index];
+              final currentDate = income.date;
+              final previousDate = index > 0 ? allIncomes[index - 1].date : null;
+              final showDateHeader = (index == 0) ||
+                  (previousDate != null && !_isSameDay(currentDate, previousDate));
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (showDateHeader)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                      dateKey == DateFormat('dd/MM/yyyy').format(DateTime.now())
-                          ? "Today"
-                          : dateKey,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        foreground: Paint()
-                        ..shader = const LinearGradient(colors: [
-                          Color.fromARGB(255, 77, 182, 172),
-                          Color.fromARGB(255, 107, 159, 249),
-                          Color.fromARGB(255, 102, 187, 106),
-                          Color.fromARGB(255, 38, 166, 154),
-                        ], transform: GradientRotation(pi / 90))
-                            .createShader(
-                          const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          _formatDateHeader(currentDate),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()
+                            ..shader = const LinearGradient(colors: [
+                              Color.fromARGB(255, 77, 182, 172),
+                              Color.fromARGB(255, 107, 159, 249),
+                              Color.fromARGB(255, 102, 187, 106),
+                              Color.fromARGB(255, 38, 166, 154),
+                            ], transform: GradientRotation(pi / 90))
+                                .createShader(
+                              const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                            ),
+                          ),
                         ),
-                      ),
+
+                        Text(
+                           '+ ${numberFormat.format(dailyTotals[DateFormat('dd/MM/yyyy').format(currentDate)] ?? 0)} RON',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  ...incomesForDate.map((income) {
-                    return Padding(
+                    Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
                       child: Container(
                         decoration: BoxDecoration(
@@ -139,7 +144,6 @@ class ViewAllIncomes extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    //"+ ${income.amount.toStringAsFixed(2)} RON",
                                     "+ ${numberFormat.format(income.amount)} RON",
                                     style: TextStyle(
                                       fontSize: 15,
@@ -163,8 +167,7 @@ class ViewAllIncomes extends StatelessWidget {
                           ),
                         ),
                       ),
-                    );
-                  }).toList(),
+                    )
                 ],
               );
 
@@ -175,6 +178,16 @@ class ViewAllIncomes extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool _isSameDay(DateTime d1, DateTime d2) {
+    return d1.year == d2.year && d1.month == d2.month && d1.day == d2.day;
+  }
+
+  String _formatDateHeader(DateTime date) {
+    final todayString = DateFormat('dd/MM/yyyy').format(DateTime.now());
+    final dateString = DateFormat('dd/MM/yyyy').format(date);
+    return (todayString == dateString) ? "Today" : dateString;
   }
 }
 

@@ -18,6 +18,7 @@ class ViewAllExpenses extends StatefulWidget {
 
 class _ViewAllExpensesState extends State<ViewAllExpenses> {
   late List<bool> isExpandedList;
+  final numberFormat = NumberFormat.currency(locale: 'en_US', symbol: '');
 
   @override
   void initState() {
@@ -40,6 +41,12 @@ class _ViewAllExpensesState extends State<ViewAllExpenses> {
 
     if (isExpandedList.length != allExpenses.length) {
       isExpandedList = List.filled(allExpenses.length, false);
+    }
+
+    final Map<String, double> dailyTotals = {};
+    for (final exp in allExpenses) {
+      final dateKey = DateFormat('dd/MM/yyyy').format(exp.date);
+      dailyTotals[dateKey] = (dailyTotals[dateKey] ?? 0) + exp.amount;
     }
 
     return GestureDetector(
@@ -78,24 +85,38 @@ class _ViewAllExpensesState extends State<ViewAllExpenses> {
                 if (showDateHeader)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                      _formatDateHeader(currDate),
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        foreground: Paint()
-                          ..shader = const LinearGradient(
-                            colors: [
-                              Color.fromARGB(255, 77, 182, 172),
-                              Color.fromARGB(255, 107, 159, 249),
-                              Color.fromARGB(255, 102, 187, 106),
-                              Color.fromARGB(255, 38, 166, 154),
-                            ],
-                            transform: GradientRotation(pi / 90),
-                          ).createShader(
-                            const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          _formatDateHeader(currDate),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()
+                              ..shader = const LinearGradient(
+                                colors: [
+                                  Color.fromARGB(255, 77, 182, 172),
+                                  Color.fromARGB(255, 107, 159, 249),
+                                  Color.fromARGB(255, 102, 187, 106),
+                                  Color.fromARGB(255, 38, 166, 154),
+                                ],
+                                transform: GradientRotation(pi / 90),
+                              ).createShader(
+                                const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                              ),
                           ),
-                      ),
+                        ),
+
+                        Text(
+                           '- ${numberFormat.format(dailyTotals[DateFormat('dd/MM/yyyy').format(currDate)] ?? 0)} RON',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 GestureDetector(
@@ -126,7 +147,6 @@ class _ViewAllExpensesState extends State<ViewAllExpenses> {
 
   Widget _buildExpenseCard(Expense expense, bool expanded) {
     final category = expense.category;
-    final numberFormat = NumberFormat.currency(locale: 'en_US', symbol: '');
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16.0),
@@ -203,7 +223,7 @@ class _ViewAllExpensesState extends State<ViewAllExpenses> {
                 margin: const EdgeInsets.only(top: 16),
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  color: Colors.grey[300],
+                  color: Colors.grey[100],
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(
                     color: const Color.fromARGB(100, 137, 131, 131),
@@ -233,7 +253,7 @@ class _ViewAllExpensesState extends State<ViewAllExpenses> {
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(5),
                           ),
                           child: const Center(
                             child: Text(

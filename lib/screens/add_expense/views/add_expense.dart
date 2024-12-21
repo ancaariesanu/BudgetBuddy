@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import 'package:budget_buddy/screens/add_expense/views/category_constants.dart';
@@ -33,6 +35,8 @@ class _AddExpenseState extends State<AddExpense> {
   late Expense expense;
 
   bool isLoading = false;
+
+  bool isReceiptUploaded = false;
 
   @override
   void dispose() {
@@ -476,18 +480,121 @@ class _AddExpenseState extends State<AddExpense> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         height: kToolbarHeight,
                         child: TextButton.icon(
-                          onPressed: () {},
+                          onPressed: () async {
+                            final ImagePicker picker = ImagePicker();
+                            final XFile? image = await picker.pickImage(
+                              source: ImageSource.gallery,
+                              imageQuality: 80
+                            );
+
+                            if (image != null && mounted) {
+                              CroppedFile? croppedFile = await ImageCropper().cropImage(
+                                sourcePath: image.path,
+                                aspectRatio: const CropAspectRatio(
+                                  ratioX: 4, 
+                                  ratioY: 5
+                                ),
+                                uiSettings: [
+                                  AndroidUiSettings(
+                                    toolbarTitle: 'Crop Image',
+                                    toolbarColor: Colors.grey,
+                                    toolbarWidgetColor: Colors.white,
+                                    initAspectRatio: CropAspectRatioPreset.original,
+                                    lockAspectRatio: false
+                                  ),
+                                  IOSUiSettings(
+                                    title: 'Crop Image',
+                                  )
+                                ],
+                              );
+
+                              if (croppedFile != null && mounted) {
+                                setState(() {
+                                  isLoading = true;
+                                });
+
+                                try {
+                                  final receiptPhotoUrl = await context
+                                      .read<ExpenseRepository>()
+                                      .uploadReceiptPhoto(croppedFile.path);
+
+                                  if (receiptPhotoUrl.isNotEmpty && mounted) {
+                                    setState(() {
+                                      isReceiptUploaded = true;
+                                      receiptPhotoController.text = receiptPhotoUrl; 
+                                    });
+                                  }
+
+                                } catch (e) {
+                                  if (mounted) {
+                                      Get.snackbar(
+                                      "Error",
+                                      "Failed to upload receipt!",
+                                      titleText: Text(
+                                        "Error",
+                                        style: TextStyle(
+                                          color:  Colors.red.shade900,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      messageText: Text(
+                                        "Failed to upload receipt!",
+                                        style: TextStyle(
+                                          color: Colors.red.shade900,
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w500
+                                        ),
+                                      ),
+                                      colorText: Colors.red.shade900,
+                                      duration: const Duration(seconds: 100),
+                                      instantInit: true,
+                                      snackPosition: SnackPosition.TOP,
+                                      icon: Icon(SFSymbols.xmark, color:  Colors.red.shade900, size: 35.0),
+                                      padding: const EdgeInsets.all(10.0),
+                                      margin: const EdgeInsets.all(10.0),
+                                      borderRadius: 8,
+                                      borderColor: Colors.red.shade600,
+                                      borderWidth: 0.9,
+                                      backgroundColor: Colors.red.shade50,
+                                      isDismissible: true,
+                                      mainButton: TextButton(
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        child: Icon(SFSymbols.xmark, color: Colors.grey.shade600, size: 20,),
+                                      ),
+                                      snackStyle: SnackStyle.FLOATING,
+                                      forwardAnimationCurve: Curves.easeOutBack,
+                                      reverseAnimationCurve: Curves.easeInBack,
+                                      animationDuration: const Duration(milliseconds: 800),
+                                      maxWidth: 300.0,
+                                    );
+                                  }
+                                } finally {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                }
+                                
+                              }
+                            }
+
+                          },
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          icon: const Icon(
-                            SFSymbols.camera,
-                            color: Color.fromARGB(255, 72, 72, 72),
+                          icon: Icon(
+                            isReceiptUploaded ? SFSymbols.checkmark : SFSymbols.camera,
+                            color: isReceiptUploaded
+                            ? Colors.green
+                            : const Color.fromARGB(255, 72, 72, 72),
                           ),
                           label: Text(
+                            isReceiptUploaded ? 'Uploaded' :
                             'Upload Receipt',
                             style: TextStyle(
                               fontSize: 16,
@@ -529,18 +636,66 @@ class _AddExpenseState extends State<AddExpense> {
                                 ? const Center(
                                     child: CircularProgressIndicator())
                                 : TextButton(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       setState(() {
-                                        expense.amount = double.parse(
-                                            expenseController.text);
-                                        expense.details =
-                                            detailsController.text;
-                                        expense.receiptPhoto =
-                                            receiptPhotoController.text;
+                                        isLoading = true;
                                       });
-                                      context
-                                          .read<CreateExpenseBloc>()
-                                          .add(CreateExpense(expense));
+
+                                      try {
+                                        expense.amount = double.parse(expenseController.text);
+                                        expense.details = detailsController.text;
+                                        expense.receiptPhoto = receiptPhotoController.text;
+
+                                        context.read<CreateExpenseBloc>().add(CreateExpense(expense));
+                                      } catch (e) {
+                                          Get.snackbar(
+                                            "Error",
+                                            "Failed to prepare the expense!",
+                                            titleText: Text(
+                                              "Error",
+                                              style: TextStyle(
+                                                color:  Colors.red.shade900,
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            messageText: Text(
+                                              "Failed to prepare the expense!",
+                                              style: TextStyle(
+                                                color: Colors.red.shade900,
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w500
+                                              ),
+                                            ),
+                                            colorText: Colors.red.shade900,
+                                            duration: const Duration(seconds: 100),
+                                            instantInit: true,
+                                            snackPosition: SnackPosition.TOP,
+                                            icon: Icon(SFSymbols.xmark, color:  Colors.red.shade900, size: 35.0),
+                                            padding: const EdgeInsets.all(10.0),
+                                            margin: const EdgeInsets.all(10.0),
+                                            borderRadius: 8,
+                                            borderColor: Colors.red.shade600,
+                                            borderWidth: 0.9,
+                                            backgroundColor: Colors.red.shade50,
+                                            isDismissible: true,
+                                            mainButton: TextButton(
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                              child: Icon(SFSymbols.xmark, color: Colors.grey.shade600, size: 20,),
+                                            ),
+                                            snackStyle: SnackStyle.FLOATING,
+                                            forwardAnimationCurve: Curves.easeOutBack,
+                                            reverseAnimationCurve: Curves.easeInBack,
+                                            animationDuration: const Duration(milliseconds: 800),
+                                            maxWidth: 300.0,
+                                          );
+                                      } finally {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                      }
                                     },
                                     style: TextButton.styleFrom(
                                       padding: EdgeInsets.zero,

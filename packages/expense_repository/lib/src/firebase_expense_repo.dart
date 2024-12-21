@@ -1,11 +1,14 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_repository/expense_repository.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseExpenseRepo implements ExpenseRepository{
   final categoryCollection = FirebaseFirestore.instance.collection('categories');
   final expenseCollection = FirebaseFirestore.instance.collection('expenses');
+  final storageRef = FirebaseStorage.instance.ref();
 
   @override
   Future<void> createCategory(Category category) async {
@@ -118,6 +121,31 @@ class FirebaseExpenseRepo implements ExpenseRepository{
                 ExpenseEntity.fromDocument(doc.data()),
               ))
           .toList();
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+  
+  @override
+  Future<String> uploadReceiptPhoto(String path) async {
+    try {
+      // Generate a unique file name for the photo
+      String fileName = 'receipts/${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+      // Get a reference to the Firebase Storage location
+      final receiptRef = storageRef.child(fileName);
+
+      // Upload the file to Firebase Storage
+      final uploadTask = receiptRef.putFile(File(path));
+
+      // Wait for the upload to complete
+      final snapshot = await uploadTask;
+
+      // Get the download URL of the uploaded file
+      final downloadUrl = await snapshot.ref.getDownloadURL();
+
+      return downloadUrl;
     } catch (e) {
       log(e.toString());
       rethrow;

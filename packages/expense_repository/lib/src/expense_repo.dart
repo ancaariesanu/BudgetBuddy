@@ -11,4 +11,6 @@ abstract class ExpenseRepository {
   Future<List<Expense>> getExpenses();
 
   Future<List<Expense>> getExpensesByMonth(int year, int month);
+  
+  Future<String> uploadReceiptPhoto(String path);
 }

@@ -22,6 +22,13 @@ Future getCategoryCreation(BuildContext context) {
         bool isLoading = false;
         Category category = Category.empty;
 
+        final ValueNotifier<bool> isFormValid = ValueNotifier(false);
+        void validateForm() {
+          isFormValid.value = categoryNameController.text.isNotEmpty &&
+              iconSelected.isNotEmpty &&
+              categoryColor != Colors.white; // Ensure color is selected
+        }
+
         return BlocProvider.value(
           value: context.read<CreateCategoryBloc>(),
           child: StatefulBuilder(
@@ -185,6 +192,7 @@ Future getCategoryCreation(BuildContext context) {
                       children: [
                         TextFormField(
                           controller: categoryNameController,
+                          onChanged: (_) => validateForm(),
                           textAlignVertical: TextAlignVertical.center,
                           decoration: InputDecoration(
                               constraints: const BoxConstraints(
@@ -262,6 +270,7 @@ Future getCategoryCreation(BuildContext context) {
                                                   () {
                                                     iconSelected =
                                                         myCategoriesIcons[i];
+                                                    validateForm();
                                                   },
                                                 );
                                               },
@@ -314,6 +323,7 @@ Future getCategoryCreation(BuildContext context) {
                                             setState(
                                               () {
                                                 categoryColor = value;
+                                                validateForm();
                                               },
                                             );
                                           },
@@ -402,33 +412,40 @@ Future getCategoryCreation(BuildContext context) {
                                 ? const Center(
                                     child: CircularProgressIndicator(),
                                   )
-                                : TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        category.categoryId = const Uuid().v1();
-                                        category.name =
-                                            categoryNameController.text;
-                                        category.icon = iconSelected;
-                                        category.color = categoryColor.value;
-                                      });
-                                      context
-                                          .read<CreateCategoryBloc>()
-                                          .add(CreateCategory(category));
-                                    },
-                                    style: TextButton.styleFrom(
-                                      padding: EdgeInsets.zero,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      'Create',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
+                                : ValueListenableBuilder<bool>(
+                                  valueListenable: isFormValid,
+                                  builder: (context, isFormValidValue, child) {
+                                    return TextButton(
+                                        onPressed: isFormValidValue
+                                        ? () {
+                                          setState(() {
+                                            category.categoryId = const Uuid().v1();
+                                            category.name =
+                                                categoryNameController.text;
+                                            category.icon = iconSelected;
+                                            category.color = categoryColor.value;
+                                          });
+                                          context
+                                              .read<CreateCategoryBloc>()
+                                              .add(CreateCategory(category));
+                                        }
+                                        :null,
+                                        style: TextButton.styleFrom(
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          'Create',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      );
+                                  }
+                                ),
                           ),
                         )
                       ],

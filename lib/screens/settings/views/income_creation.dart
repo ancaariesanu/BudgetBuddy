@@ -19,7 +19,14 @@ Future getIncomeCreation(BuildContext context) {
         TextEditingController incomeAmountController = TextEditingController();
         TextEditingController incomeDetailsController = TextEditingController();
         TextEditingController dateController = TextEditingController();
-        
+
+        final ValueNotifier<bool> isFormValid = ValueNotifier(false);
+        void validateForm() {
+          isFormValid.value = incomeAmountController.text.isNotEmpty &&
+              incomeDetailsController.text.isNotEmpty &&
+              dateController.text.isNotEmpty; // Ensure date is selected
+        }
+
         Income income = Income.empty;
 
         return BlocProvider.value(
@@ -233,6 +240,7 @@ Future getIncomeCreation(BuildContext context) {
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}$')),
                               ],
+                              onChanged: (_) => validateForm()
                             ),
                           ),
                         ),
@@ -241,6 +249,7 @@ Future getIncomeCreation(BuildContext context) {
                         ),
                         TextFormField(
                           controller: incomeDetailsController,
+                          onChanged: (_) => validateForm(),
                           textAlignVertical: TextAlignVertical.center,
                           decoration: InputDecoration(
                               constraints: const BoxConstraints(
@@ -280,6 +289,7 @@ Future getIncomeCreation(BuildContext context) {
                                 dateController.text =
                                     DateFormat('dd/MM/yyyy').format(newDate);
                                 income.date = newDate;
+                                validateForm();
                               });
                             }
                           },
@@ -320,33 +330,40 @@ Future getIncomeCreation(BuildContext context) {
                                 ? const Center(
                                     child: CircularProgressIndicator(),
                                   )
-                                : TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        income.incomeId = const Uuid().v1();
-                                        income.details =
-                                            incomeDetailsController.text;
-                                        income.amount =
-                                            double.parse(incomeAmountController.text);
-                                      });
-                                      context
-                                          .read<CreateIncomeBloc>()
-                                          .add(CreateIncome(income));
-                                    },
-                                    style: TextButton.styleFrom(
-                                      padding: EdgeInsets.zero,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      'Add',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
+                                : ValueListenableBuilder<bool>(
+                                  valueListenable: isFormValid,
+                                   builder: (context, isFormValidValue, child) {
+                                    return TextButton(
+                                        onPressed: isFormValidValue
+                                        ? () {
+                                          setState(() {
+                                            income.incomeId = const Uuid().v1();
+                                            income.details =
+                                                incomeDetailsController.text;
+                                            income.amount =
+                                                double.parse(incomeAmountController.text);
+                                          });
+                                          context
+                                              .read<CreateIncomeBloc>()
+                                              .add(CreateIncome(income));
+                                        }
+                                        : null,
+                                        style: TextButton.styleFrom(
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          'Add',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      );
+                                  }
+                                ),
                           ),
                         )
                       ],

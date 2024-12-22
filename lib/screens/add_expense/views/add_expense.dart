@@ -39,6 +39,17 @@ class _AddExpenseState extends State<AddExpense> {
 
   bool isReceiptUploaded = false;
 
+  bool isFormValid = false;
+  void validateForm() {
+    setState(() {
+      isFormValid = expenseController.text.isNotEmpty &&
+          categoryController.text.isNotEmpty &&
+          detailsController.text.isNotEmpty &&
+          dateController.text.isNotEmpty;
+    });
+  }
+
+
   @override
   void dispose() {
     // Dispose of the ScrollController to free up resources
@@ -288,6 +299,7 @@ class _AddExpenseState extends State<AddExpense> {
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}$')),
                             ],
+                            onChanged: (_) => validateForm(),
                           ),
                         ),
                       ),
@@ -304,6 +316,7 @@ class _AddExpenseState extends State<AddExpense> {
                               onTap: () {
                                 setState(() {
                                   isExpanded = !isExpanded;
+                                  validateForm(); 
                                 });
                               },
                               decoration: InputDecoration(
@@ -338,6 +351,7 @@ class _AddExpenseState extends State<AddExpense> {
                                             )
                                           : BorderRadius.circular(10),
                                       borderSide: BorderSide.none)),
+                              onChanged: (_) => validateForm(),
                             ),
                           ],
                         ),
@@ -433,6 +447,7 @@ class _AddExpenseState extends State<AddExpense> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide.none)),
+                          onChanged: (_) => validateForm(),
                         ),
                       ),
                       const SizedBox(
@@ -476,6 +491,7 @@ class _AddExpenseState extends State<AddExpense> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide.none)),
+                          onChanged: (_) => validateForm(),
                         ),
                       ),
                       const SizedBox(
@@ -641,7 +657,8 @@ class _AddExpenseState extends State<AddExpense> {
                                 ? const Center(
                                     child: CircularProgressIndicator())
                                 : TextButton(
-                                    onPressed: () async {
+                                    onPressed: isFormValid
+                                    ? () async {
                                       setState(() {
                                         isLoading = true;
                                       });
@@ -701,7 +718,8 @@ class _AddExpenseState extends State<AddExpense> {
                                           isLoading = false;
                                         });
                                       }
-                                    },
+                                    }
+                                    :null,
                                     style: TextButton.styleFrom(
                                       padding: EdgeInsets.zero,
                                       shape: RoundedRectangleBorder(

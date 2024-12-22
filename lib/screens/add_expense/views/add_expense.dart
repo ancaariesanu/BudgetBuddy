@@ -5,6 +5,7 @@ import 'package:budget_buddy/screens/add_expense/blocs/get_categories_bloc/get_c
 import 'package:budget_buddy/screens/add_expense/views/category_creation.dart';
 import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:get/get.dart';
@@ -283,6 +284,10 @@ class _AddExpenseState extends State<AddExpense> {
                                 borderSide: BorderSide.none,
                               ),
                             ),
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}$')),
+                            ],
                           ),
                         ),
                       ),

@@ -281,7 +281,7 @@ class MainScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Your Categories",
+                  "My Categories",
                   style: TextStyle(
                       fontSize: 18,
                       color: Theme.of(context).colorScheme.onSurface,

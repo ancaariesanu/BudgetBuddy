@@ -1,4 +1,5 @@
 import 'package:budget_buddy/screens/discounts/views/discounts_constants.dart';
+import 'package:budget_buddy/screens/fortune_wheel/fortune_wheel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 
@@ -53,7 +54,7 @@ class _DiscountsState extends State<Discounts> {
           iconTheme: IconThemeData(
             color: Theme.of(context).colorScheme.onSurface,
           ),
-        ),
+        ), 
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
@@ -163,13 +164,36 @@ class _DiscountsState extends State<Discounts> {
                 const SizedBox(height: 25),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    "My Discounts",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Theme.of(context).colorScheme.onSurface,
-                      fontWeight: FontWeight.w700,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "My Discounts",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  const FortuneWheel(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Fortune Wheel",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Theme.of(context).colorScheme.outline,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 25),

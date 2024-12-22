@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:budget_buddy/screens/settings/blocs/create_income_bloc/create_income_bloc.dart';
 import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:get/get.dart';
@@ -228,6 +229,10 @@ Future getIncomeCreation(BuildContext context) {
                                   borderSide: BorderSide.none,
                                 ),
                               ),
+                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}$')),
+                              ],
                             ),
                           ),
                         ),

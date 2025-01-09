@@ -13,7 +13,7 @@ class Discounts extends StatefulWidget {
 class _DiscountsState extends State<Discounts> {
 
   final List<int> targets = [10, 15, 25, 30, 35];
-  int currentReceipts = 17; 
+  int currentReceipts = 35; 
 
   List<bool> isExpandedList = [];
 
@@ -181,7 +181,7 @@ class _DiscountsState extends State<Discounts> {
                             context,
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
-                                  const FortuneWheel(),
+                                  const FortuneWheelPage(),
                             ),
                           );
                         },

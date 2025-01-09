@@ -55,7 +55,7 @@ class Settings extends StatelessWidget {
                             //     Theme.of(context).colorScheme.tertiary.withOpacity(0.4)
                             //   ],
                             // ),
-                            color: Colors.grey.shade600,
+                            color: const Color.fromARGB(255, 232, 180, 101),
                             borderRadius: BorderRadius.circular(25),
                             boxShadow: const [
                               BoxShadow(

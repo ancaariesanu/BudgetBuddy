@@ -35,6 +35,17 @@ class GetExpensesBloc extends Bloc<GetExpensesEvent, GetExpensesState> {
       }
     });
 
+    on<GetExpensesWithReceipts>((event, emit) async {
+      emit(GetExpensesLoading());
+      try {
+        final expenses = await expenseRepository.getExpensesWithReceipts();
+        emit(GetExpensesSuccess(expenses, {})); // No category totals needed for this case
+      } catch (e) {
+        emit(GetExpensesFailure());
+      }
+    });
+
+
   }
 
   Map<String, double> calculateTotalAmountPerCategory(List<Expense> expenses) {

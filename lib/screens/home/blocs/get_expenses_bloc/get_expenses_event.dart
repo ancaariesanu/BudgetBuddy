@@ -18,3 +18,5 @@ class FetchMonthlyExpenses extends GetExpensesEvent {
   @override
   List<Object> get props => [year, month];
 }
+
+class GetExpensesWithReceipts extends GetExpensesEvent {}

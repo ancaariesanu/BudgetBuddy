@@ -152,5 +152,17 @@ class FirebaseExpenseRepo implements ExpenseRepository{
     }
   }
 
+  @override
+  Future<List<Expense>> getExpensesWithReceipts() async {
+    try {
+      final snapshot = await expenseCollection.where('receiptPhoto', isNotEqualTo: '').get();
+      return snapshot.docs.map((doc) => Expense.fromEntity(ExpenseEntity.fromDocument(doc.data()))).toList();
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+
   
 }

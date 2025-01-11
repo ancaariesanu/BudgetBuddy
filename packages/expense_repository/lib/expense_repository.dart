@@ -6,3 +6,5 @@ export 'src/expense_repo.dart';
 export 'src/firebase_expense_repo.dart';
 export 'src/income_repo.dart';
 export 'src/firebase_income_repo.dart';
+export 'src/user_repo.dart';
+export 'src/firebase_user_repo.dart';

@@ -1,8 +1,10 @@
+import 'package:budget_buddy/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:budget_buddy/screens/discounts/views/discounts.dart';
 import 'package:budget_buddy/screens/settings/views/settings.dart';
 import 'package:budget_buddy/screens/view_all_expenses/view_all_expenses.dart';
 import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:budget_buddy/screens/add_expense/views/category_constants.dart';
 import 'package:intl/intl.dart';
@@ -130,14 +132,20 @@ class MainScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute<void>(
+                          MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                //Settings(incomes: incomes),
                                 const Settings(),
-                          ),
+                              )
+                          
                         );
                       },
                       icon: const Icon(SFSymbols.gear_alt_fill, size: 30),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        context.read<SignInBloc>().add(const SignOutRequired());
+                      },
+                      icon: const Icon(SFSymbols.square_arrow_left_fill, size: 30),
                     ),
                   ],
                 ),

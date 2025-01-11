@@ -5,8 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_repository/expense_repository.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class FirebaseExpenseRepo implements ExpenseRepository{
-  final categoryCollection = FirebaseFirestore.instance.collection('categories');
+class FirebaseExpenseRepo implements ExpenseRepository {
+  final categoryCollection =
+      FirebaseFirestore.instance.collection('categories');
   final expenseCollection = FirebaseFirestore.instance.collection('expenses');
   final storageRef = FirebaseStorage.instance.ref();
 
@@ -14,8 +15,8 @@ class FirebaseExpenseRepo implements ExpenseRepository{
   Future<void> createCategory(Category category) async {
     try {
       await categoryCollection
-        .doc(category.categoryId)
-        .set(category.toEntity().toDocument());
+          .doc(category.categoryId)
+          .set(category.toEntity().toDocument());
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -25,11 +26,10 @@ class FirebaseExpenseRepo implements ExpenseRepository{
   @override
   Future<List<Category>> getCategory() async {
     try {
-      return await categoryCollection
-        .get()
-        .then((value) => value.docs.map((e) => 
-          Category.fromEntity(CategoryEntity.fromDocument(e.data()))
-        ).toList()) ;
+      return await categoryCollection.get().then((value) => value.docs
+          .map(
+              (e) => Category.fromEntity(CategoryEntity.fromDocument(e.data())))
+          .toList());
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -63,7 +63,8 @@ class FirebaseExpenseRepo implements ExpenseRepository{
           'name': categorySnapshot.data()?['name'],
           'icon': categorySnapshot.data()?['icon'],
           'color': categorySnapshot.data()?['color'],
-          'totalExpenses': updatedTotalExpenses, // Include the updated totalExpenses
+          'totalExpenses':
+              updatedTotalExpenses, // Include the updated totalExpenses
         };
 
         // Add the new expense document with the updated category field
@@ -71,18 +72,20 @@ class FirebaseExpenseRepo implements ExpenseRepository{
           expenseCollection.doc(expense.expenseId),
           {
             ...expense.toEntity().toDocument(), // Serialize the expense data
-            'category': updatedCategoryMap,     // Override the category field
+            'category': updatedCategoryMap, // Override the category field
           },
         );
 
         // Fetch all expenses related to the category and update their category field
         final relatedExpensesSnapshot = await expenseCollection
-            .where('category.categoryId', isEqualTo: expense.category.categoryId)
+            .where('category.categoryId',
+                isEqualTo: expense.category.categoryId)
             .get();
 
         for (final doc in relatedExpensesSnapshot.docs) {
           transaction.update(doc.reference, {
-            'category': updatedCategoryMap, // Update the category field with new totalExpenses
+            'category':
+                updatedCategoryMap, // Update the category field with new totalExpenses
           });
         }
       });
@@ -95,11 +98,9 @@ class FirebaseExpenseRepo implements ExpenseRepository{
   @override
   Future<List<Expense>> getExpenses() async {
     try {
-      return await expenseCollection
-        .get()
-        .then((value) => value.docs.map((e) => 
-          Expense.fromEntity(ExpenseEntity.fromDocument(e.data()))
-        ).toList()) ;
+      return await expenseCollection.get().then((value) => value.docs
+          .map((e) => Expense.fromEntity(ExpenseEntity.fromDocument(e.data())))
+          .toList());
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -126,7 +127,7 @@ class FirebaseExpenseRepo implements ExpenseRepository{
       rethrow;
     }
   }
-  
+
   @override
   Future<String> uploadReceiptPhoto(String path) async {
     try {
@@ -155,14 +156,15 @@ class FirebaseExpenseRepo implements ExpenseRepository{
   @override
   Future<List<Expense>> getExpensesWithReceipts() async {
     try {
-      final snapshot = await expenseCollection.where('receiptPhoto', isNotEqualTo: '').get();
-      return snapshot.docs.map((doc) => Expense.fromEntity(ExpenseEntity.fromDocument(doc.data()))).toList();
+      final snapshot =
+          await expenseCollection.where('receiptPhoto', isNotEqualTo: '').get();
+      return snapshot.docs
+          .map((doc) =>
+              Expense.fromEntity(ExpenseEntity.fromDocument(doc.data())))
+          .toList();
     } catch (e) {
       log(e.toString());
       rethrow;
     }
   }
-
-
-  
 }

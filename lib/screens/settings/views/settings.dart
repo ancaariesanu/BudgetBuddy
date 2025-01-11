@@ -1,3 +1,5 @@
+import 'package:budget_buddy/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:budget_buddy/screens/auth/welcome_screen.dart';
 import 'package:budget_buddy/screens/settings/blocs/create_income_bloc/create_income_bloc.dart';
 import 'package:budget_buddy/screens/settings/blocs/get_incomes_bloc/get_incomes_bloc.dart';
 import 'package:budget_buddy/screens/settings/views/income_creation.dart';
@@ -228,52 +230,53 @@ class Settings extends StatelessWidget {
                       const SizedBox(
                         height: 200,
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        height: kToolbarHeight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Theme.of(context).colorScheme.primary,
-                                Theme.of(context).colorScheme.secondary,
-                                Theme.of(context).colorScheme.tertiary,
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 2.5,
-                                spreadRadius: 0.5,
-                                color: Color.fromARGB(255, 137, 131, 131),
-                                offset: Offset(2, 2),
-                              ),
-                            ],
-                          ),
-                          child: TextButton.icon(
-                            onPressed: () async {
-                              //log out logic!!!!
-                            },
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.transparent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            icon: const Icon(
-                              SFSymbols.square_arrow_left,
-                              color: Colors.white,
-                            ),
-                            label: const Text(
-                              'Log Out',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // SizedBox(
+                      //   width: MediaQuery.of(context).size.width * 0.4,
+                      //   height: kToolbarHeight,
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //       gradient: LinearGradient(
+                      //         colors: [
+                      //           Theme.of(context).colorScheme.primary,
+                      //           Theme.of(context).colorScheme.secondary,
+                      //           Theme.of(context).colorScheme.tertiary,
+                      //         ],
+                      //       ),
+                      //       borderRadius: BorderRadius.circular(10),
+                      //       boxShadow: const [
+                      //         BoxShadow(
+                      //           blurRadius: 2.5,
+                      //           spreadRadius: 0.5,
+                      //           color: Color.fromARGB(255, 137, 131, 131),
+                      //           offset: Offset(2, 2),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //     child: TextButton.icon(
+                      //       onPressed: () {
+                      //         context.read<SignInBloc>().add(const SignOutRequired());
+
+                      //       },
+                      //       style: TextButton.styleFrom(
+                      //         backgroundColor: Colors.transparent,
+                      //         shape: RoundedRectangleBorder(
+                      //           borderRadius: BorderRadius.circular(10),
+                      //         ),
+                      //       ),
+                      //       icon: const Icon(
+                      //         SFSymbols.square_arrow_left,
+                      //         color: Colors.white,
+                      //       ),
+                      //       label: const Text(
+                      //         'Log Out',
+                      //         style: TextStyle(
+                      //           fontSize: 16,
+                      //           color: Colors.white,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

@@ -13,9 +13,10 @@ class GetExpensesBloc extends Bloc<GetExpensesEvent, GetExpensesState> {
       emit(GetExpensesLoading());
       try {
         List<Expense> expenses = await expenseRepository.getExpenses();
-        Map<String, double> categoryTotals = calculateTotalAmountPerCategory(expenses);
-        emit(GetExpensesSuccess(expenses, categoryTotals));
+        print("Fetched ${expenses.length} expenses");
+         emit(GetExpensesSuccess(expenses, calculateTotalAmountPerCategory(expenses)));
       } catch (e) {
+        print("Error fetching expenses: $e");
         emit(GetExpensesFailure());
       }
     });

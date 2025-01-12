@@ -102,7 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       if (newExpense != null) {
                         setState(() {
-                          expenseState.expenses.insert(0, newExpense);
+                          //expenseState.expenses.insert(0, newExpense);
+                          context.read<CreateExpenseBloc>().add(CreateExpense(newExpense));
                         });
                       }
                     },

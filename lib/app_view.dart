@@ -1,5 +1,6 @@
 import 'package:budget_buddy/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:budget_buddy/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:budget_buddy/screens/add_expense/blocs/create_expense_bloc/create_expense_bloc.dart';
 import 'package:budget_buddy/screens/auth/welcome_screen.dart';
 import 'package:budget_buddy/screens/home/blocs/get_expenses_bloc/get_expenses_bloc.dart';
 import 'package:budget_buddy/screens/home/views/home_screen.dart';
@@ -35,6 +36,11 @@ class MyAppView extends StatelessWidget {
             create: (context) => GetIncomesBloc(
               FirebaseIncomeRepo(),
             )..add(GetIncomes()),
+          ),
+          BlocProvider(
+            create: (context) => CreateExpenseBloc(
+              context.read<ExpenseRepository>(),
+            ),
           ),
         ],
         child: GetMaterialApp(

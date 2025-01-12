@@ -2,6 +2,7 @@ import 'package:budget_buddy/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:budget_buddy/screens/add_expense/blocs/create_expense_bloc/create_expense_bloc.dart';
 import 'package:budget_buddy/screens/discounts/views/discounts.dart';
 import 'package:budget_buddy/screens/home/blocs/get_expenses_bloc/get_expenses_bloc.dart';
+import 'package:budget_buddy/screens/settings/blocs/get_incomes_bloc/get_incomes_bloc.dart';
 import 'package:budget_buddy/screens/settings/views/settings.dart';
 import 'package:budget_buddy/screens/view_all_expenses/view_all_expenses.dart';
 import 'package:expense_repository/expense_repository.dart';
@@ -115,6 +116,19 @@ class _MainScreenState extends State<MainScreen> {
           }
         },
         ),
+        BlocListener<GetIncomesBloc, GetIncomesState>(
+          listener: (context, state) {
+            if (state is GetIncomesSuccess) {
+              print('Incomes updated: ${state.incomes.length}');
+              setState(() {
+                widget.incomes.clear();
+                widget.incomes.addAll(state.incomes);
+                updateTotals(); // Recalculate totals, including latestIncome
+              });
+            }
+          },
+        ),
+
 
       ],
         child: SafeArea(

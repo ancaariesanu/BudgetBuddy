@@ -226,13 +226,6 @@ class _FortuneWheelState extends State<FortuneWheelPage> {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  Text(
-                                    '(You only have 2 trials each day)',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.white,
-                                    ),
-                                  ),
                                 ],
                               )),
                         ))

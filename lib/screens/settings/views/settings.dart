@@ -36,248 +36,250 @@ class Settings extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-              body: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.width / 2,
-                        decoration: BoxDecoration(
-                            // gradient: LinearGradient(
-                            //   colors: [
-                            //     Theme.of(context).colorScheme.primary.withOpacity(0.4),
-                            //     Theme.of(context).colorScheme.secondary.withOpacity(0.4),
-                            //     Theme.of(context).colorScheme.tertiary.withOpacity(0.4)
-                            //   ],
-                            // ),
-                            color: const Color.fromARGB(255, 232, 180, 101),
-                            borderRadius: BorderRadius.circular(25),
-                            boxShadow: const [
-                              BoxShadow(
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width / 2,
+                          decoration: BoxDecoration(
+                              // gradient: LinearGradient(
+                              //   colors: [
+                              //     Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                              //     Theme.of(context).colorScheme.secondary.withOpacity(0.4),
+                              //     Theme.of(context).colorScheme.tertiary.withOpacity(0.4)
+                              //   ],
+                              // ),
+                              color: const Color.fromARGB(255, 232, 180, 101),
+                              borderRadius: BorderRadius.circular(25),
+                              boxShadow: const [
+                                BoxShadow(
+                                    blurRadius: 2.5,
+                                    spreadRadius: 0.5,
+                                    color: Color.fromARGB(255, 203, 203, 203),
+                                    offset: Offset(2, 2))
+                              ]),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 25.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Account Details",
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w800),
+                                      textAlign: TextAlign.center,
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Displayed Name: ",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Text(
+                                      "Robert Negre",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Email: ",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Text(
+                                      "robertnegre16@gmail.com",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 45,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: kToolbarHeight,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
                                   blurRadius: 2.5,
                                   spreadRadius: 0.5,
-                                  color: Color.fromARGB(255, 203, 203, 203),
-                                  offset: Offset(2, 2))
-                            ]),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 25.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Account Details",
+                                  color: Color.fromARGB(255, 137, 131, 131),
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
+                            ),
+                            child: BlocProvider(
+                              create: (context) => CreateIncomeBloc(FirebaseIncomeRepo()),
+                              child: Builder(
+                                builder: (localContext) => TextButton.icon(
+                                  onPressed: () async {
+                                    await getIncomeCreation(localContext);
+                                    context.read<GetIncomesBloc>().add(GetIncomes());
+                                  },
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: Colors.transparent,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    SFSymbols.plus_app,
+                                    color: Color.fromARGB(255, 72, 72, 72),
+                                  ),
+                                  label: Text(
+                                    'Add Income',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Theme.of(context).colorScheme.outline,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 45,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: kToolbarHeight,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 2.5,
+                                  spreadRadius: 0.5,
+                                  color: Color.fromARGB(255, 137, 131, 131),
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
+                            ),
+                            child: TextButton.icon(
+                              onPressed: () async {
+                                //view all incomes logic!!!!
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute<void>(
+                                    builder: (BuildContext context) =>
+                                        ViewAllIncomes(state.incomes),
+                                  ),
+                                );
+                              },
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              icon: const Icon(
+                                SFSymbols.tray_full,
+                                color: Color.fromARGB(255, 72, 72, 72),
+                              ),
+                              label: Text(
+                                'View All Income Details',
                                 style: TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w800),
-                                    textAlign: TextAlign.center,
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Displayed Name: ",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  Text(
-                                    "Robert Negre",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Email: ",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  Text(
-                                    "robertnegre16@gmail.com",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 45,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: kToolbarHeight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 2.5,
-                                spreadRadius: 0.5,
-                                color: Color.fromARGB(255, 137, 131, 131),
-                                offset: Offset(2, 2),
-                              ),
-                            ],
-                          ),
-                          child: BlocProvider(
-                            create: (context) => CreateIncomeBloc(FirebaseIncomeRepo()),
-                            child: Builder(
-                              builder: (localContext) => TextButton.icon(
-                                onPressed: () async {
-                                  await getIncomeCreation(localContext);
-                                  context.read<GetIncomesBloc>().add(GetIncomes());
-                                },
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                icon: const Icon(
-                                  SFSymbols.plus_app,
-                                  color: Color.fromARGB(255, 72, 72, 72),
-                                ),
-                                label: Text(
-                                  'Add Income',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Theme.of(context).colorScheme.outline,
-                                  ),
+                                  fontSize: 16,
+                                  color: Theme.of(context).colorScheme.outline,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 45,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: kToolbarHeight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 2.5,
-                                spreadRadius: 0.5,
-                                color: Color.fromARGB(255, 137, 131, 131),
-                                offset: Offset(2, 2),
-                              ),
-                            ],
-                          ),
-                          child: TextButton.icon(
-                            onPressed: () async {
-                              //view all incomes logic!!!!
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      ViewAllIncomes(state.incomes),
-                                ),
-                              );
-                            },
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.transparent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            icon: const Icon(
-                              SFSymbols.tray_full,
-                              color: Color.fromARGB(255, 72, 72, 72),
-                            ),
-                            label: Text(
-                              'View All Income Details',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).colorScheme.outline,
-                              ),
-                            ),
-                          ),
+                        const SizedBox(
+                          height: 200,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 200,
-                      ),
-                      // SizedBox(
-                      //   width: MediaQuery.of(context).size.width * 0.4,
-                      //   height: kToolbarHeight,
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //       gradient: LinearGradient(
-                      //         colors: [
-                      //           Theme.of(context).colorScheme.primary,
-                      //           Theme.of(context).colorScheme.secondary,
-                      //           Theme.of(context).colorScheme.tertiary,
-                      //         ],
-                      //       ),
-                      //       borderRadius: BorderRadius.circular(10),
-                      //       boxShadow: const [
-                      //         BoxShadow(
-                      //           blurRadius: 2.5,
-                      //           spreadRadius: 0.5,
-                      //           color: Color.fromARGB(255, 137, 131, 131),
-                      //           offset: Offset(2, 2),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     child: TextButton.icon(
-                      //       onPressed: () {
-                      //         context.read<SignInBloc>().add(const SignOutRequired());
-
-                      //       },
-                      //       style: TextButton.styleFrom(
-                      //         backgroundColor: Colors.transparent,
-                      //         shape: RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //       ),
-                      //       icon: const Icon(
-                      //         SFSymbols.square_arrow_left,
-                      //         color: Colors.white,
-                      //       ),
-                      //       label: const Text(
-                      //         'Log Out',
-                      //         style: TextStyle(
-                      //           fontSize: 16,
-                      //           color: Colors.white,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
+                        // SizedBox(
+                        //   width: MediaQuery.of(context).size.width * 0.4,
+                        //   height: kToolbarHeight,
+                        //   child: Container(
+                        //     decoration: BoxDecoration(
+                        //       gradient: LinearGradient(
+                        //         colors: [
+                        //           Theme.of(context).colorScheme.primary,
+                        //           Theme.of(context).colorScheme.secondary,
+                        //           Theme.of(context).colorScheme.tertiary,
+                        //         ],
+                        //       ),
+                        //       borderRadius: BorderRadius.circular(10),
+                        //       boxShadow: const [
+                        //         BoxShadow(
+                        //           blurRadius: 2.5,
+                        //           spreadRadius: 0.5,
+                        //           color: Color.fromARGB(255, 137, 131, 131),
+                        //           offset: Offset(2, 2),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //     child: TextButton.icon(
+                        //       onPressed: () {
+                        //         context.read<SignInBloc>().add(const SignOutRequired());
+                
+                        //       },
+                        //       style: TextButton.styleFrom(
+                        //         backgroundColor: Colors.transparent,
+                        //         shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(10),
+                        //         ),
+                        //       ),
+                        //       icon: const Icon(
+                        //         SFSymbols.square_arrow_left,
+                        //         color: Colors.white,
+                        //       ),
+                        //       label: const Text(
+                        //         'Log Out',
+                        //         style: TextStyle(
+                        //           fontSize: 16,
+                        //           color: Colors.white,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -362,7 +362,7 @@ class _AddExpenseState extends State<AddExpense> {
                                 constraints: const BoxConstraints(
                                   maxWidth: 360,
                                 ),
-                                height: 145,
+                                height: 250,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: const BoxDecoration(
                                     color: Colors.white,

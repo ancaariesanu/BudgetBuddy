@@ -33,6 +33,8 @@ The app opens with a **Welcome Screen**, offering the following options:
 
 Upon successful authentication, users are directed to the Home Page.
 
+---
+
 ### Home Page
 #### Layout:
 - **Left Side**: Displays the user's registered name for a personalized touch.
@@ -158,6 +160,7 @@ A fun way to win discounts:
 ---
 
 ### Final App Demo
+[Click Here for Demo](https://drive.google.com/file/d/1I5TB6fUuxgTiOTEt8KpVP8Y0ZvKwLUU1/view?resourcekey)
 
 
 
